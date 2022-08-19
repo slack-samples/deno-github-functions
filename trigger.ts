@@ -4,7 +4,7 @@ const trigger: Trigger = {
   type: "shortcut",
   name: "Create GitHub issue",
   description: "Create a new GitHub issue in a repository",
-  workflow: "#/workflows/create_issue_workflow",
+  workflow: "#/workflows/create_new_issue_workflow",
   inputs: {
     interactivity: {
       value: "{{data.interactivity}}",
