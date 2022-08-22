@@ -7,13 +7,9 @@ const CreateIssue = DefineFunction({
   source_file: "functions/create-issue/mod.ts",
   input_parameters: {
     properties: {
-      owner: {
+      url: {
         type: Schema.types.string,
-        description: "Repository owner",
-      },
-      repo: {
-        type: Schema.types.string,
-        description: "Repository name",
+        description: "URL of the GitHub repository",
       },
       title: {
         type: Schema.types.string,
@@ -28,7 +24,7 @@ const CreateIssue = DefineFunction({
         description: "Comma-separated list of assignees",
       },
     },
-    required: ["owner", "repo", "title"],
+    required: ["url", "title"],
   },
   output_parameters: {
     properties: {

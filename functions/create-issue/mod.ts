@@ -10,9 +10,15 @@ const createGitHubIssue: SlackFunctionHandler<typeof CreateIssue.definition> =
       "Content-Type": "application/json",
     };
 
-    const { owner, repo, title, description, assignees } = inputs;
+    const { url, title, description, assignees } = inputs;
+    const { hostname, pathname } = new URL(url);
+    const [_, owner, repo] = pathname.split("/");
 
-    const baseUrl = env.GITHUB_API_URL ?? "api.github.com";
+    // https://docs.github.com/en/enterprise-server@3.3/rest/guides/getting-started-with-the-rest-api
+    const apiURL = hostname === "github.com"
+      ? "api.github.com"
+      : `${hostname}/api/v3`;
+    const baseUrl = env.GITHUB_API_URL ?? apiURL;
     const issueEndpoint = `https://${baseUrl}/repos/${owner}/${repo}/issues`;
 
     const body = JSON.stringify({

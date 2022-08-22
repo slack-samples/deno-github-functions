@@ -27,13 +27,9 @@ const issueFormData = CreateNewIssue.addStep(
     description: "Create a new issue inside of a GitHub repository",
     fields: {
       elements: [{
-        name: "owner",
-        title: "Repository owner",
-        description: "The GitHub username of the repository owner",
-        type: Schema.types.string,
-      }, {
-        name: "repo",
-        title: "Repository name",
+        name: "url",
+        title: "Repository URL",
+        description: "The GitHub URL of the repository",
         type: Schema.types.string,
       }, {
         name: "title",
@@ -50,14 +46,13 @@ const issueFormData = CreateNewIssue.addStep(
           "GitHub username(s) of the user(s) to assign the issue to (separated by commas)",
         type: Schema.types.string,
       }],
-      required: ["owner", "repo", "title"],
+      required: ["url", "title"],
     },
   },
 );
 
 const issue = CreateNewIssue.addStep(CreateIssue, {
-  owner: issueFormData.outputs.fields.owner,
-  repo: issueFormData.outputs.fields.repo,
+  url: issueFormData.outputs.fields.url,
   title: issueFormData.outputs.fields.title,
   description: issueFormData.outputs.fields.description,
   assignees: issueFormData.outputs.fields.assignees,
