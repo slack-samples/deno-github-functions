@@ -24,7 +24,7 @@ const createGitHubIssue: SlackFunctionHandler<typeof CreateIssue.definition> =
     const body = JSON.stringify({
       title,
       body: description,
-      assignees: assignees?.split(",").map((asignee: string) => asignee.trim()),
+      assignees: assignees?.split(",").map((assignee: string) => assignee.trim()),
     });
 
     try {
