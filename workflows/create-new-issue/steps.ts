@@ -39,6 +39,7 @@ const issueFormData = CreateNewIssue.addStep(
         name: "description",
         title: "Issue description",
         type: Schema.types.string,
+        long: true,
       }, {
         name: "assignees",
         title: "Issue assignees",
