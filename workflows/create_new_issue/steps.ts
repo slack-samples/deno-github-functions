@@ -1,5 +1,5 @@
 import { DefineWorkflow, Schema } from "deno-slack-sdk/mod.ts";
-import { CreateIssue } from "../../functions/index.ts";
+import CreateIssue from "../../functions/create_issue/definition.ts";
 
 const CreateNewIssue = DefineWorkflow({
   callback_id: "create_new_issue_workflow",

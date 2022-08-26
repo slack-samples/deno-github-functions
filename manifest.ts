@@ -1,6 +1,6 @@
 import { Manifest } from "deno-slack-sdk/mod.ts";
-import { CreateIssue } from "./functions/index.ts";
-import { CreateNewIssue } from "./workflows/index.ts";
+import CreateIssue from "./functions/create_issue/definition.ts";
+import CreateNewIssue from "./workflows/create_new_issue/steps.ts";
 
 export default Manifest({
   name: "Workflows for GitHub",

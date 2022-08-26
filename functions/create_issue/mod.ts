@@ -18,13 +18,14 @@ const createGitHubIssue: SlackFunctionHandler<typeof CreateIssue.definition> =
     const apiURL = hostname === "github.com"
       ? "api.github.com"
       : `${hostname}/api/v3`;
-    const baseUrl = env.GITHUB_API_URL ?? apiURL;
-    const issueEndpoint = `https://${baseUrl}/repos/${owner}/${repo}/issues`;
+    const issueEndpoint = `https://${apiURL}/repos/${owner}/${repo}/issues`;
 
     const body = JSON.stringify({
       title,
       body: description,
-      assignees: assignees?.split(",").map((assignee: string) => assignee.trim()),
+      assignees: assignees?.split(",").map((assignee: string) =>
+        assignee.trim()
+      ),
     });
 
     try {
