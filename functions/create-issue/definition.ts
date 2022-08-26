@@ -13,7 +13,7 @@ const CreateIssue = DefineFunction({
       },
       title: {
         type: Schema.types.string,
-        description: "Title of the issue",
+        description: "Issue Title",
       },
       description: {
         type: Schema.types.string,
