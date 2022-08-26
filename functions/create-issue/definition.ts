@@ -21,7 +21,7 @@ const CreateIssue = DefineFunction({
       },
       assignees: {
         type: Schema.types.string,
-        description: "Comma-separated list of assignees",
+        description: "Assignees",
       },
     },
     required: ["url", "title"],
