@@ -9,7 +9,7 @@ const CreateIssue = DefineFunction({
     properties: {
       url: {
         type: Schema.types.string,
-        description: "URL of the GitHub repository",
+        description: "Repository URL",
       },
       title: {
         type: Schema.types.string,
