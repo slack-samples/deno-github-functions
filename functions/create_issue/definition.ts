@@ -1,6 +1,6 @@
 import { DefineFunction, Schema } from "deno-slack-sdk/mod.ts";
 
-const CreateIssue = DefineFunction({
+const CreateIssueDefinition = DefineFunction({
   callback_id: "create_issue",
   title: "Create GitHub issue",
   description: "Create a new GitHub issue in a repository",
@@ -37,4 +37,4 @@ const CreateIssue = DefineFunction({
   },
 });
 
-export default CreateIssue;
+export default CreateIssueDefinition;

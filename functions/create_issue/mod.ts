@@ -1,8 +1,9 @@
-import type { SlackFunctionHandler } from "deno-slack-sdk/types.ts";
-import type CreateIssue from "./definition.ts";
+import { SlackFunction } from "deno-slack-sdk/mod.ts";
+import CreateIssueDefinition from "./definition.ts";
 
 // https://docs.github.com/en/rest/issues/issues#create-an-issue
-const createGitHubIssue: SlackFunctionHandler<typeof CreateIssue.definition> =
+export default SlackFunction(
+  CreateIssueDefinition,
   async ({ inputs, env }) => {
     const headers = {
       Accept: "application/vnd.github+json",
@@ -54,6 +55,5 @@ const createGitHubIssue: SlackFunctionHandler<typeof CreateIssue.definition> =
         },
       };
     }
-  };
-
-export default createGitHubIssue;
+  },
+);
