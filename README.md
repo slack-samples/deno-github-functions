@@ -4,15 +4,16 @@ This app brings oft-used GitHub functionality - such as creating new issues - to
 
 **Guide Outline**:
 
-- [Supported workflows](#supported-workflows)
-- [Getting started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Clone the sample](#clone-the-sample)
-  - [Install to a Workspace](#install-to-a-workspace)
-  - [Authorize with GitHub](#authorize-with-github)
-  - [Create a link trigger](#create-a-link-trigger)
-  - [Run or deploy your app](#run-or-deploy-your-app)
-- [Project structure](#project-structure)
+- [Supported Workflows](#supported-workflows)
+- [Setup](#setup)
+  - [Install the Slack CLI](#install-the-slack-cli)
+  - [Install the Sample App](#install-the-sample-app)
+  - [GitHub Access Token](#github-access-token)
+- [Create a Link Trigger](#create-a-link-trigger)
+- [Running Your Project Locally](#running-your-project-locally)
+- [Deploying Your App](#deploying-your-app)
+- [Project Structure](#project-structure)
+- [Resources](#resources)
 
 ---
 
