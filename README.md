@@ -34,9 +34,13 @@ Step-by-step instructions can be found in our
 
 ### GitHub Access Token
 
-A personal access token is required when calling the GitHub API. Tokens can be created in [your developer settings on GitHub](https://github.com/settings/tokens).
+A personal access token is required when calling the GitHub API. Tokens can be
+created in [your developer settings on GitHub](https://github.com/settings/tokens).
 
-> Your personal access token allows your application to perform the API calls used by functions as though it was _from your GitHub account_. That means all issues created from the Create GitHub issue workflow will appear to have been created by the account associated with the personal access token in use!
+> Your personal access token allows your application to perform the API calls
+used by functions as though it was _from your GitHub account_. That means all
+issues created from the Create GitHub issue workflow will appear to have been
+created by the account associated with the personal access token in use!
 
 #### Required Access Token Scopes
 
@@ -49,9 +53,27 @@ To access public repositories, your personal access token should have the follow
 
 To prevent `404: Not Found` errors **when attempting to access private repositories**, the `repo` scope must also be included.
 
+After selecting the necessary scopes but before moving to the next step, generate
+then copy your personal access token.
+
 #### Add the access token to environment variables
 
-Your personal access token should be added as an environment variable to your app using the following command (replacing `ACCESS_TOKEN` with your token):
+Storing your access token as an environment variable allows you to use
+different tokens across local and deployed versions of the same app. 
+
+When developing locally, variables found in the `.env` file at the root of your
+project are used. Deployed apps use variables added using `slack env`.
+
+For your local development environment, move `.env.sample` to `.env` then add
+your access token to `.env` (replacing `ACCESS_TOKEN` with your token):
+
+```bash
+# .env
+GITHUB_TOKEN=ACCESS_TOKEN_HERE
+```
+
+To add your access token to a Workspace where your app is installed, use the
+following command (once again, replacing `ACCESS_TOKEN` with your token):
 
 ```zsh
 $ slack env add GITHUB_TOKEN ACCESS_TOKEN
