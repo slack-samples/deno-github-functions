@@ -172,8 +172,9 @@ Functions can be used independently or as steps in Workflows.
 A [Workflow](https://api.slack.com/future/workflows) is a set of steps that are
 executed in order. Each step in a Workflow is a function.
 
-Workflows can be configured to run without user input or they can wait for input
-via form before continuing to the next step.
+Workflows can be configured to run without user input or they can collect input
+by beginning with a [form](https://api.slack.com/future/forms) before continuing
+to the next step.
 
 ### `/triggers`
 
