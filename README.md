@@ -1,6 +1,7 @@
 # Workflows for GitHub Sample App
 
-This app brings oft-used GitHub functionality - such as creating new issues - to Slack using functions and workflows.
+This app brings oft-used GitHub functionality - such as creating new issues - to
+Slack using functions and workflows.
 
 **Guide Outline**:
 
@@ -51,41 +52,45 @@ $ slack install
 ### GitHub Access Token
 
 A personal access token is required when calling the GitHub API. Tokens can be
-created in [your developer settings on GitHub](https://github.com/settings/tokens).
+created in
+[your developer settings on GitHub](https://github.com/settings/tokens).
 
 > Your personal access token allows your application to perform the API calls
-used by functions as though it was _from your GitHub account_. That means all
-issues created from the Create GitHub issue workflow will appear to have been
-created by the account associated with the personal access token in use!
+> used by functions as though it was _from your GitHub account_. That means all
+> issues created from the Create GitHub issue workflow will appear to have been
+> created by the account associated with the personal access token in use!
 
 #### Required Access Token Scopes
 
-To access public repositories, your personal access token should have the following scopes:
+To access public repositories, your personal access token should have the
+following scopes:
 
 - `public_repo`, `repo:invite`
 - `read:org`
 - `read:user`, `user:email`
 - `read:enterprise`
 
-To prevent `404: Not Found` errors **when attempting to access private repositories**, the `repo` scope must also be included.
+To prevent `404: Not Found` errors **when attempting to access private
+repositories**, the `repo` scope must also be included.
 
-After selecting the necessary scopes but before moving to the next step, generate
-then copy your personal access token.
+After selecting the necessary scopes, generate then copy your personal access
+token.
 
 #### Add the access token to environment variables
 
-Storing your access token as an environment variable allows you to use
-different tokens across local and deployed versions of the same app. 
+Storing your access token as an environment variable allows you to use different
+tokens across local and deployed versions of the same app.
 
 When developing locally, variables found in the `.env` file at the root of your
 project are used. Deployed apps use variables added using `slack env`.
 
-For your local development environment, move `.env.sample` to `.env` then add
-your access token to `.env` (replacing `ACCESS_TOKEN` with your token):
+For your local development environment, rename `.env.sample` to `.env` and add
+your access token to the file contents (replacing `ACCESS_TOKEN` with your
+token):
 
 ```bash
 # .env
-GITHUB_TOKEN=ACCESS_TOKEN_HERE
+GITHUB_TOKEN=ACCESS_TOKEN
 ```
 
 To add your access token to a Workspace where your app is installed, use the
@@ -97,14 +102,13 @@ $ slack env add GITHUB_TOKEN ACCESS_TOKEN
 
 ## Create a Link Trigger
 
-To invoke a specific Workflow from within Slack, the special "shortcut URL"
-found after creating a Link Trigger can be used. These shortcut URLs can be
-posted directly in a channel or added as a bookmark, and when clicked will
-magically invoke the associated Workflow.
+To execute a Workflow in Slack, a generated **Shortcut URL** can be used.
+Shortcut URLs can be posted in a channel or added as a bookmark, and,
+when clicked, will run the associated Workflow.
 
-Link Triggers are unique to each installed version of your app, meaning
-shortcut URLs will be different across workspaces and between locally developed
-and deployed apps.
+To generate a Shortcut URL for a Workflow, we create a Link Trigger. Link Triggers are unique to each installed version of your app, meaning Shortcut
+URLs will be different across workspaces, as well as between locally run and
+deployed apps.
 
 To create a Link Trigger for the "Create New Issue" Workflow, run the following
 command:
@@ -113,9 +117,9 @@ command:
 $ slack trigger create --trigger-def triggers/create_new_issue_shortcut.ts
 ```
 
-Go ahead and post the resulting shortcut URL to a channel or add it as a
-bookmark! You can try clicking it too, but this link has no magic until your
-app is ran or deployed.
+Go ahead and post the resulting Shortcut URL to a channel or add it as a
+bookmark! You can try clicking it, too, but this link has no magic until your app
+is run or deployed.
 
 ## Running Your Project Locally
 
@@ -130,12 +134,12 @@ $ slack run
 Connected, awaiting events
 ```
 
-Once running, click the shortcut URL associated with the `(dev)` version of
-your app. This should begin your Workflow by opening a form to create a new
-GitHub issue!
+Once running, click the shortcut URL associated with the `(dev)` version of your
+app. This should begin your Workflow by opening a form to create a new GitHub
+issue!
 
-Press `<CTRL> + C` to end your development process and move on to deploying
-your app!
+Press `<CTRL> + C` to end your development process and move on to deploying your
+app!
 
 ## Deploying Your App
 
@@ -146,7 +150,7 @@ workspace using `slack deploy`:
 $ slack deploy
 ```
 
-After deploying, the deployed shortcut URL should begin the "create new issue"
+After deploying, the deployed Shortcut URL should begin the "Create New Issue"
 Workflow when clicked!
 
 ## Project Structure
