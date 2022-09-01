@@ -24,9 +24,9 @@ export default SlackFunction(
     const body = JSON.stringify({
       title,
       body: description,
-      assignees: assignees?.split(",").map((assignee: string) =>
-        assignee.trim()
-      ),
+      assignees: assignees?.split(",").map((assignee: string) => {
+        return assignee.trim();
+      }),
     });
 
     try {

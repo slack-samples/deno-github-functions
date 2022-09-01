@@ -1,7 +1,7 @@
 import { DefineWorkflow, Schema } from "deno-slack-sdk/mod.ts";
 import CreateIssueDefinition from "../functions/create_issue/definition.ts";
 
-const CreateNewIssue = DefineWorkflow({
+const CreateNewIssueWorkflow = DefineWorkflow({
   callback_id: "create_new_issue_workflow",
   title: "Create new issue",
   description: "Create a new GitHub issue",
@@ -18,11 +18,11 @@ const CreateNewIssue = DefineWorkflow({
   },
 });
 
-const issueFormData = CreateNewIssue.addStep(
+const issueFormData = CreateNewIssueWorkflow.addStep(
   Schema.slack.functions.OpenForm,
   {
     title: "Create an issue",
-    interactivity: CreateNewIssue.inputs.interactivity,
+    interactivity: CreateNewIssueWorkflow.inputs.interactivity,
     submit_label: "Create",
     description: "Create a new issue inside of a GitHub repository",
     fields: {
@@ -52,16 +52,16 @@ const issueFormData = CreateNewIssue.addStep(
   },
 );
 
-const issue = CreateNewIssue.addStep(CreateIssueDefinition, {
+const issue = CreateNewIssueWorkflow.addStep(CreateIssueDefinition, {
   url: issueFormData.outputs.fields.url,
   title: issueFormData.outputs.fields.title,
   description: issueFormData.outputs.fields.description,
   assignees: issueFormData.outputs.fields.assignees,
 });
 
-CreateNewIssue.addStep(Schema.slack.functions.SendMessage, {
-  channel_id: CreateNewIssue.inputs.channel,
+CreateNewIssueWorkflow.addStep(Schema.slack.functions.SendMessage, {
+  channel_id: CreateNewIssueWorkflow.inputs.channel,
   message: issue.outputs.GitHubResponse,
 });
 
-export default CreateNewIssue;
+export default CreateNewIssueWorkflow;
