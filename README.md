@@ -32,6 +32,21 @@ To use this sample, you first need to install and configure the Slack CLI.
 Step-by-step instructions can be found in our
 [Quickstart Guide](https://api.slack.com/future/quickstart).
 
+### Install the Sample App
+
+Start by cloning this sample and installing it to a Workspace of your choice:
+
+```zsh
+# Clone this project onto your machine
+$ slack create my-github-app -t slack-samples/deno-github-functions
+
+# Change into this project directory
+$ cd my-github-app
+
+# Install the app to a workspace
+$ slack install
+```
+
 ### GitHub Access Token
 
 A personal access token is required when calling the GitHub API. Tokens can be
@@ -96,12 +111,6 @@ in real-time with `slack run`. You'll know an app is the development version
 because the name has the string `(dev)` appended.
 
 ```zsh
-# Clone this project onto your machine
-$ slack create my-github-app -t slack-samples/deno-github-functions
-
-# Change into this project directory
-$ cd my-github-app
-
 # Run app locally
 $ slack run
 
