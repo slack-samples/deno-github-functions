@@ -96,13 +96,25 @@ $ slack env add GITHUB_TOKEN ACCESS_TOKEN
 
 ## Create a Link Trigger
 
-Link Triggers are used to initiate Workflows in Slack. Trigger Shortcut URLs can be pasted directly or added as bookmarks in channels. 
+To invoke a specific Workflow from within Slack, the special "shortcut URL"
+found after creating a Link Trigger can be used. These shortcut URLs can be
+posted directly in a channel or added as a bookmark, and when clicked will
+magically invoke the associated Workflow.
 
-To create a Link Trigger, run the following command:
+Link Triggers are unique to each installed version of your app, meaning
+shortcut URLs will be different across workspaces and between locally developed
+and deployed apps.
+
+To create a Link Trigger for the "Create New Issue" Workflow, run the following
+command:
 
 ```zsh
 $ slack trigger create --trigger-def triggers/create_new_issue_shortcut.ts
 ```
+
+Go ahead and post the resulting shortcut URL to a channel or add it as a
+bookmark! You can try clicking it too, but this link has no magic until your
+app is ran or deployed.
 
 ## Running Your Project Locally
 
@@ -117,9 +129,13 @@ $ slack run
 Connected, awaiting events
 ```
 
-Once running, click the "Create New Issue" Link Trigger in channel that was created in the previous section. 
+Once running, click the shortcut URL associated with the `(dev)` version of
+your app. This should begin your Workflow by opening a form to create a new
+GitHub issue!
 
-A form to create a new GitHub issue should appear!
+Press `<CTRL> + C` to end your development process and move on to deploying
+your app!
+
 ## Deploying Your App
 
 When you're done with development, you can deploy your app to a production
@@ -128,6 +144,9 @@ workspace using `slack deploy`:
 ```zsh
 $ slack deploy
 ```
+
+After deploying, the deployed shortcut URL should begin the "create new issue"
+Workflow when clicked!
 
 ## Project Structure
 
