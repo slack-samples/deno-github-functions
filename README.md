@@ -36,7 +36,7 @@ Step-by-step instructions can be found in our
 
 ### Install the Sample App
 
-Start by cloning this sample and installing it to a Workspace of your choice:
+Start by cloning this sample and installing it into a workspace:
 
 ```zsh
 # Clone this project onto your machine
@@ -70,8 +70,8 @@ following scopes:
 - `read:user`, `user:email`
 - `read:enterprise`
 
-To prevent `404: Not Found` errors **when attempting to access private
-repositories**, the `repo` scope must also be included.
+To prevent `404: Not Found` errors when attempting to access private
+repositories, the `repo` scope must also be included.
 
 After selecting the necessary scopes, generate then copy your personal access
 token.
@@ -103,12 +103,13 @@ $ slack env add GITHUB_TOKEN ACCESS_TOKEN
 ## Create a Link Trigger
 
 To execute a Workflow in Slack, a generated **Shortcut URL** can be used.
-Shortcut URLs can be posted in a channel or added as a bookmark, and,
-when clicked, will run the associated Workflow.
+Shortcut URLs can be posted in a channel or added as a bookmark, and, when
+clicked, will run the associated Workflow.
 
-To generate a Shortcut URL for a Workflow, we create a Link Trigger. Link Triggers are unique to each installed version of your app, meaning Shortcut
-URLs will be different across workspaces, as well as between locally run and
-deployed apps.
+To generate a Shortcut URL for a Workflow, we first create a Link Trigger. Link
+Triggers are unique to each installed version of your app, meaning Shortcut URLs
+will be different across workspaces, as well as between locally run and deployed
+apps.
 
 To create a Link Trigger for the "Create New Issue" Workflow, run the following
 command:
@@ -117,9 +118,9 @@ command:
 $ slack trigger create --trigger-def triggers/create_new_issue_shortcut.ts
 ```
 
-Go ahead and post the resulting Shortcut URL to a channel or add it as a
-bookmark! You can try clicking it, too, but this link has no magic until your app
-is run or deployed.
+Copy and paste the resulting Shortcut URL to a channel or add it as a bookmark.
+You can try clicking it, too, but this link won't run the Workflow until the app
+is either running locally or deployed.
 
 ## Running Your Project Locally
 
@@ -134,12 +135,11 @@ $ slack run
 Connected, awaiting events
 ```
 
-Once running, click the shortcut URL associated with the `(dev)` version of your
-app. This should begin your Workflow by opening a form to create a new GitHub
-issue!
+Once running, click the previously created Shortcut URL associated with the
+`(dev)` version of your app. This should begin your Workflow by opening a form
+to create a new GitHub issue!
 
-Press `<CTRL> + C` to end your development process and move on to deploying your
-app!
+To stop running locally, press `<CTRL> + C` to end the process.
 
 ## Deploying Your App
 
