@@ -1,263 +1,198 @@
-# A starter template for Run On Slack apps
+# Workflows for GitHub Sample App
 
-This repo is a starter template for new Run On Slack apps. 
+This app brings oft-used GitHub functionality - such as creating new issues - to
+Slack using functions and workflows.
 
-## Prerequisites
+**Guide Outline**:
 
-To use this template, you will need to have installed and configured the Slack CLI. 
-Do this by following our [Quickstart Guide](https://api.slack.com/future/quickstart).
+- [Supported Workflows](#supported-workflows)
+- [Setup](#setup)
+  - [Install the Slack CLI](#install-the-slack-cli)
+  - [Install the Sample App](#install-the-sample-app)
+  - [GitHub Access Token](#github-access-token)
+- [Create a Link Trigger](#create-a-link-trigger)
+- [Running Your Project Locally](#running-your-project-locally)
+- [Deploying Your App](#deploying-your-app)
+- [Project Structure](#project-structure)
+- [Resources](#resources)
 
-# Making an app
+---
 
-Make a Run On Slack app with this with repo by **creating an app from this template**, 
-**configuring your app**, then **writing functions**. 
+## Supported Workflows
 
-Once you're done, you can Run your app with the CLI's local development server
-or Deploy your app to production.
+- **Create new issue**: Create and assign new issues in repositories.
 
-## 1. Creating an app from this template
+## Setup
 
-Clone this repo with the Slack CLI:
+Before getting started, make sure you have a development workspace where you
+have permissions to install apps. If you don’t have one set up, go ahead and
+[create one](https://slack.com/create).
 
-```zsh
-$ slack create my-app -t slack-samples/deno-starter-template
-```
+### Install the Slack CLI
 
-## 2. Configuring your app
+To use this sample, you first need to install and configure the Slack CLI.
+Step-by-step instructions can be found in our
+[Quickstart Guide](https://api.slack.com/future/quickstart).
 
-The first thing we'll do is configure our app's manifest. This will let us 
-configure things like our app's name and the [scopes](https://api.slack.com/scopes)
-it requires.
+### Install the Sample App
 
-Enter your project's root directory:
-
-```zsh
-$ cd my-app
-```
-
-Next, open the manifest file, `manifest.ts`. 
-
-In the `Manifest` configuration, set your app's `name` and `description`:
-
-```ts
-export default Manifest({
-  name: "starter-template", // Change this
-  description: "A starter template.", // Change this
-  icon: "assets/icon.png",
-  functions: [],
-  outgoingDomains: [],
-  botScopes: ["commands", "chat:write", "chat:write.public"],
-});
-```
-
-## 3. Writing functions
-
-On our [next-generation platform](https://api.slack.com/future), you can 
-build **Run On Slack functions**, reusable building blocks of automation 
-that are deployed to Slack and accept inputs, perform some calculations, 
-and provide outputs. 
-
-Functions can be triggered via Global Shortcut, and we'll be adding support 
-for more function and trigger types in the coming months.
-
-To create a Run On Slack function:
-
-* **define** the function in the Manifest, then 
-* **implement** the function in its respective source file.
-
-### 3.a. Define your function
-
-In your `manifest.ts` file, define a function with `DefineFunction` like this:
-
-```ts
-const MyFunction = DefineFunction({
-  callback_id: "a_unique_callback_id", 
-  title: "Do Something",        
-  description: "A short, helpful sentence about your app.",
-  source_file: "functions/my_function.ts",
-  input_parameters: {
-    properties: {},
-    required: [],
-  },
-  output_parameters: {
-    properties: {},
-    required: [],
-  }
-});
-```
-
-<details>
-<summary>Deep dive into function definitions</summary>
-
-Let's look at each property in detail:
-
-* **`callback_id` is a unique string identifier.** This is used internally, 
-  and also for raising issues about this function.
-* **`title` is how others will see your function.** For example, if you have a 
-  Global shortcut function `GetCustomerProfileFunction`, you might set your `callback_id` to be `get_customer_profile_function`.
-* **`description` is a succinct summary of what your function does.**
-* **`source_file` is where your function is implemented,** relative to the root of
-  your project. 
-* **`input_parameters` is where you configure your function's inputs.**
-* **`output_parameters` is where you configure your function's outputs.**
-
-Both `input_parameters` and `output_parameters` can be an object with further 
-sub-properties:
-  
-* `type` is the type of the input parameter. The supported types are string, boolean, object, and array. Support for more types coming soon.
-* `description` is a string description of the input parameter.
-
-Define inputs to and outputs for your functions in the `properties` of `input_parameters` and `output_parameters`, respectively, like this:
-
-```ts
-parameterName: {
-  type: Schema.type.string, // See more supported types below
-  description: "A short description"
-}
-```
-
-For example, let's say you want to create a function that takes two string 
-inputs, `firstName` and `lastName`, and produces a string output 
-called `fullName`. Your function definition might look something like this:
-
-```js
-const GetCustomerFullName = DefineFunction({
-  callback_id: "get_customer_full_name", 
-  title: "Get Customer Full Name",        
-  description: "Given a first and last name, returns the full name.",
-  source_file: "functions/get_customer_full_name.ts",
-  input_parameters: {
-    properties: {
-      firstName: {
-        type: Schema.types.string,
-        description: "The customer's first name"
-      },
-      lastName: {
-        type: Schema.types.string,
-        description: "The customer's last name"
-      }
-    },
-    required: []
-  },
-  output_parameters: {
-    properties: {
-      fullName: {
-        type: Schema.types.string,
-        description: "The customer's full name"
-      }
-    },
-    required: []
-  }
-});
-```
-
-If you want to set a property as required, list its name in its 
-respective `required` property.
-
-For example, if you have an input parameter named `customer_id` that you 
-want to be required, you can do so like this:
-
-```js
-input_parameters: {
-  properties: {
-    customer_id: {
-      type: Schema.types.string,
-      description: "The customer's ID"
-    }
-  },
-  required: ["customer_id"]
-}
-```
-
-</details>
-
-### 3.b. Implement your function
-
-With your function defined in the manifest file, you can now implement your 
-function in its respective source file. 
-
-Create a file with a name corresponding to your function's name:
+Start by cloning this sample and installing it into a workspace:
 
 ```zsh
-$ touch functions/my_function.ts
+# Clone this project onto your machine
+$ slack create my-github-app -t slack-samples/deno-github-functions
+
+# Change into this project directory
+$ cd my-github-app
+
+# Install the app to a workspace
+$ slack install
 ```
 
-In your function's source file, use one of the following templates to 
-implement your function:
+### GitHub Access Token
 
-<details>
-<summary>Function template</summary>
+A personal access token is required when calling the GitHub API. Tokens can be
+created in
+[your developer settings on GitHub](https://github.com/settings/tokens).
 
-```ts
-import type { SlackFunctionHandler } from "deno-slack-sdk/types.ts";
+> Your personal access token allows your application to perform the API calls
+> used by functions as though it was _from your GitHub account_. That means all
+> issues created from the Create GitHub issue workflow will appear to have been
+> created by the account associated with the personal access token in use!
 
-// Import your function's definition here
-import type { MyFunction } from "../manifest.ts";
+#### Required Access Token Scopes
 
-// Construct your Slack function handler, using your function's definition 
-// to enforce input and output requirements:
-const myFunction: SlackFunctionHandler<typeof MyFunction.definition> = (
-  { inputs, env },
-) => {
-  return {
-    outputs: {},
-  };
-};
+To access public repositories, your personal access token should have the
+following scopes:
 
-export default myFunction;
+- `public_repo`, `repo:invite`
+- `read:org`
+- `read:user`, `user:email`
+- `read:enterprise`
+
+To prevent `404: Not Found` errors when attempting to access private
+repositories, the `repo` scope must also be included.
+
+After selecting the necessary scopes, generate then copy your personal access
+token.
+
+#### Add the access token to environment variables
+
+Storing your access token as an environment variable allows you to use different
+tokens across local and deployed versions of the same app.
+
+When developing locally, variables found in the `.env` file at the root of your
+project are used. Deployed apps use variables added using `slack env`.
+
+For your local development environment, rename `.env.sample` to `.env` and add
+your access token to the file contents (replacing `ACCESS_TOKEN` with your
+token):
+
+```bash
+# .env
+GITHUB_TOKEN=ACCESS_TOKEN
 ```
 
-</details>
-
-<details>
-<summary>Async function template</summary>
-
-```ts
-import type { SlackFunctionHandler } from "deno-slack-sdk/types.ts";
-
-// Import your function's definition here
-import type { MyFunction } from "../manifest.ts";
-
-// Construct your Slack function handler, using your function's definition 
-// to enforce input and output requirements:
-const myFunction: SlackFunctionHandler<typeof MyFunction.definition> = async (
-  { inputs, env },
-) => {
-  return await {
-    outputs: {},
-  };
-};
-
-export default myFunction;
-```
-
-</details>
-
-A function's implementation must be the default export of the source file. 
-When instantiating the function, use `SlackFunctionHandler` and pass 
-in your function's `.definition` so that your required inputs and outputs will be 
-enforced. 
-
-## Running your app locally
-
-While building your app, you can see your changes propagated to your 
-workspace in real-time with `slack run`.
-
-Executing `slack run` starts a local development server, syncing changes to 
-your workspace's development version of your app. (You'll know it's the 
-development version because the name has the string `(dev)` appended).
-
-Your local development server is ready to go when you see the following:
+To add your access token to a Workspace where your app is installed, use the
+following command (once again, replacing `ACCESS_TOKEN` with your token):
 
 ```zsh
+$ slack env add GITHUB_TOKEN ACCESS_TOKEN
+```
+
+## Create a Link Trigger
+
+To execute a Workflow in Slack, a generated **Shortcut URL** can be used.
+Shortcut URLs can be posted in a channel or added as a bookmark, and, when
+clicked, will run the associated Workflow.
+
+To generate a Shortcut URL for a Workflow, we first create a Link Trigger. Link
+Triggers are unique to each installed version of your app, meaning Shortcut URLs
+will be different across workspaces, as well as between locally run and deployed
+apps.
+
+To create a Link Trigger for the "Create New Issue" Workflow, run the following
+command:
+
+```zsh
+$ slack trigger create --trigger-def triggers/create_new_issue_shortcut.ts
+```
+
+Copy and paste the resulting Shortcut URL to a channel or add it as a bookmark.
+You can try clicking it, too, but this link won't run the Workflow until the app
+is either running locally or deployed.
+
+## Running Your Project Locally
+
+While building your app, you can see your changes propagated to your workspace
+in real-time with `slack run`. You'll know an app is the development version
+because the name has the string `(dev)` appended.
+
+```zsh
+# Run app locally
+$ slack run
+
 Connected, awaiting events
-
 ```
 
-When you want to turn off the local development server, use `Ctrl+c` in the command prompt.
+Once running, click the previously created Shortcut URL associated with the
+`(dev)` version of your app. This should begin your Workflow by opening a form
+to create a new GitHub issue!
 
+To stop running locally, press `<CTRL> + C` to end the process.
 
-## Deploying your app to Slack
+## Deploying Your App
 
-When you're done developing your app, you can deploy it directly to Slack 
-with `slack deploy`.
+When you're done with development, you can deploy your app to a production
+workspace using `slack deploy`:
+
+```zsh
+$ slack deploy
+```
+
+After deploying, the deployed Shortcut URL should begin the "Create New Issue"
+Workflow when clicked!
+
+## Project Structure
+
+### `manifest.ts`
+
+The [app manifest](https://api.slack.com/future/manifest) contains the app's
+configuration. This file defines attributes like app name and description.
+
+### `slack.json`
+
+Used by the CLI to interact with the project's SDK dependencies. It contains
+script hooks that are executed by the CLI and implemented by the SDK.
+
+### `/functions`
+
+[Functions](https://api.slack.com/future/functions) are reusable building blocks
+of automation that accept inputs, perform calculations, and provide outputs.
+Functions can be used independently or as steps in Workflows.
+
+### `/workflows`
+
+A [Workflow](https://api.slack.com/future/workflows) is a set of steps that are
+executed in order. Each step in a Workflow is a function.
+
+Workflows can be configured to run without user input or they can collect input
+by beginning with a [form](https://api.slack.com/future/forms) before continuing
+to the next step.
+
+### `/triggers`
+
+[Triggers](https://api.slack.com/future/triggers) determine when Workflows are
+executed. A trigger file describes a scenario in which a workflow should be run,
+such as a user pressing a button or when a specific event occurs.
+
+## Resources
+
+To learn more about developing with the CLI, you can visit the following guides:
+
+- [Creating a new app with the CLI](https://api.slack.com/future/create)
+- [Configuring your app](https://api.slack.com/future/manifest)
+- [Developing locally](https://api.slack.com/future/run)
+
+To view all documentation and guides available, visit the
+[Overview page](https://api.slack.com/future/overview).
