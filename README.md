@@ -54,13 +54,13 @@ $ slack install
 
 All Run-on-Slack applications come in two flavors: the [deployed][deploy], or production,
 instance as well as the [locally-running][run], or dev, instance. The deployed instance
-is hosted on Slack infrastructure while the dev instance runs on directly on your
-computer. This is an important distinction to keep in mind for two reasons:
+is hosted on Slack while the dev instance runs on directly on your computer. This
+is an important distinction to keep in mind for two reasons:
 
 1. [Triggers][create-trigger], which execute application Workflows, are instance-
    specific. Each application instance needs its own set of triggers.
 2. Some `slack` CLI commands are instance-specific. For example, `slack deploy`
-   deploys code for your _production_ instance to Slack infrastructure. `slack env`
+   deploys code for your _production_ instance to Slack hosting. `slack env`
    manages environment variables for your _production_ instance. `slack install`
    installs your _production_ instance to a Slack Workspace. `slack run` starts
    your _dev_ instance in a process on your computer.
@@ -151,11 +151,9 @@ Once you selected the Workspace and the application instance, the `slack trigger
 command will output a Shortcut URL. Copy and paste this URL to a channel or add
 it as a bookmark.
 
-<!-- TODO: not entirely true... since the workflow starts with a builtin function (open form)
-     it will seem to work just fine. the issue is that any custom app functions wont
-     execute since those are not deployed or running locally... -->
 You can try clicking it, too, but this link won't run the Workflow until the app
-is either running locally or deployed!
+is either running locally or deployed! Read on to learn how to run your project
+locally and deploy it to Slack hosting.
 
 ## Running Your Project Locally
 
@@ -179,7 +177,7 @@ To stop running locally, press `<CTRL> + C` to end the process.
 ## Deploying Your App
 
 When you're done with development, you can deploy a production version of your app
-to Slack hosted infrastructure using `slack deploy`:
+to Slack hosting using `slack deploy`:
 
 ```zsh
 $ slack deploy
