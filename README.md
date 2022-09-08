@@ -54,7 +54,7 @@ $ slack install
 
 All Run-on-Slack applications come in two flavors: the [deployed][deploy], or production,
 instance as well as the [locally-running][run], or dev, instance. The deployed instance
-is hosted on Slack while the dev instance runs on directly on your computer. This
+is hosted on Slack while the dev instance runs directly on your computer. This
 is an important distinction to keep in mind for two reasons:
 
 1. [Triggers][create-trigger], which execute application Workflows, are instance-
