@@ -2,3 +2,4 @@ dist
 package
 .DS_Store
 .env
+.slack/apps.dev.json
