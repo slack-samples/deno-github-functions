@@ -180,9 +180,7 @@ Issue" Workflow when clicked!
 
 ### Viewing Activity Logs for Your Production App
 
-Unlike when [running your project locally][run-locally], activity logs from the
-production instance of your application are not streamed to your laptop. However,
-you can still view its logs with the `slack activity` command:
+Activity logs from the production instance of your application can be viewed with the `slack activity` command:
 
 ```zsh
 $ slack activity
