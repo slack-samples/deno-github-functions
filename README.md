@@ -46,9 +46,24 @@ $ slack create my-github-app -t slack-samples/deno-github-functions
 # Change into this project directory
 $ cd my-github-app
 
-# Install the app to a workspace
+# Install the production instance of the app to a workspace
 $ slack install
 ```
+
+#### Application Instances
+
+All Run-on-Slack applications come in two flavors: the [deployed][deploy], or production,
+instance as well as the [locally-running][run], or dev, instance. The deployed instance
+is hosted on Slack infrastructure while the dev instance runs on directly on your
+computer. This is an important distinction to keep in mind for two reasons:
+
+1. [Triggers][create-trigger], which execute application Workflows, are instance-
+   specific. Each application instance needs its own set of triggers.
+2. Some `slack` CLI commands are instance-specific. For example, `slack deploy`
+   deploys code for your _production_ instance to Slack infrastructure. `slack env`
+   manages environment variables for your _production_ instance. `slack install`
+   installs your _production_ instance to a Slack Workspace. `slack run` starts
+   your _dev_ instance in a process on your computer.
 
 ### GitHub Access Token
 
@@ -79,17 +94,13 @@ token.
 
 #### Add the access token to environment variables
 
-<!-- TODO: This is the first mention of local vs. deployed versions of apps;
-     do we need to introduce this concept earlier? can we use the term "dev app"
-     rather than "locally-running"? since the app name has "(dev)" in it I
-     think that's clearer? -->
 Storing your access token as an environment variable allows you to use different
 tokens across local and deployed versions of the same app.
 
 ##### Locally-running application environment variables
 
-When developing locally, variables found in the `.env` file at the root of your
-project are used. For your local development environment, rename `.env.sample`
+When [developing locally][run], variables found in the `.env` file at the root
+of your project are used. For your local development environment, rename `.env.sample`
 to `.env` and add your access token to the file contents (replacing `ACCESS_TOKEN`
 with your token):
 
@@ -100,8 +111,8 @@ GITHUB_TOKEN=ACCESS_TOKEN
 
 ##### Deployed application environment variables
 
-Deployed apps use variables added using `slack env`. To add your access token to
-a Workspace where your deployed app is installed, use the following command
+[Deployed apps][deploy] use variables added using `slack env`. To add your access
+token to a Workspace where your deployed app is installed, use the following command
 (once again, replacing `ACCESS_TOKEN` with your token):
 
 ```zsh
@@ -119,8 +130,8 @@ and, when clicked, will run the associated Workflow.
 
 To generate a Shortcut URL for a Workflow, we first create a Link Trigger. Link
 Triggers are unique to each installed version of your app, meaning Shortcut URLs
-will be different across workspaces, as well as between locally run and deployed
-apps.
+will be different across workspaces, as well as
+[between locally run and deployed apps][app-instances].
 
 To create a Link Trigger for the "Create New Issue" Workflow, run the following
 command:
@@ -234,3 +245,6 @@ To view all documentation and guides available, visit the
 [link-triggers]: https://api.slack.com/future/triggers/link
 [create-trigger]: #create-a-link-trigger
 [run-locally]: #running-your-project-locally
+[app-instances]: #application-instances
+[run]: https://api.slack.com/future/run
+[deploy]: https://api.slack.com/future/deploy
