@@ -37,7 +37,7 @@ const CreateIssueDefinition = DefineFunction({
         description: "Issue link",
       },
     },
-    required: ["GitHubIssueNumber", "GitHubIssueNumber"],
+    required: ["GitHubIssueNumber", "GitHubIssueLink"],
   },
 });
 
