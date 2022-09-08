@@ -12,24 +12,25 @@ export default SlackFunction(
     };
 
     const { url, title, description, assignees } = inputs;
-    const { hostname, pathname } = new URL(url);
-    const [_, owner, repo] = pathname.split("/");
-
-    // https://docs.github.com/en/enterprise-server@3.3/rest/guides/getting-started-with-the-rest-api
-    const apiURL = hostname === "github.com"
-      ? "api.github.com"
-      : `${hostname}/api/v3`;
-    const issueEndpoint = `https://${apiURL}/repos/${owner}/${repo}/issues`;
-
-    const body = JSON.stringify({
-      title,
-      body: description,
-      assignees: assignees?.split(",").map((assignee: string) => {
-        return assignee.trim();
-      }),
-    });
 
     try {
+      const { hostname, pathname } = new URL(url);
+      const [_, owner, repo] = pathname.split("/");
+
+      // https://docs.github.com/en/enterprise-server@3.3/rest/guides/getting-started-with-the-rest-api
+      const apiURL = hostname === "github.com"
+        ? "api.github.com"
+        : `${hostname}/api/v3`;
+      const issueEndpoint = `https://${apiURL}/repos/${owner}/${repo}/issues`;
+
+      const body = JSON.stringify({
+        title,
+        body: description,
+        assignees: assignees?.split(",").map((assignee: string) => {
+          return assignee.trim();
+        }),
+      });
+
       const issue = await fetch(issueEndpoint, {
         method: "POST",
         headers,
@@ -41,18 +42,15 @@ export default SlackFunction(
 
       return {
         outputs: {
-          GitHubResponse:
-            `Issue #${issue.number} has been successfully created\n` +
-            `Link to issue: ${issue.html_url}`,
+          GitHubIssueNumber: issue.number,
+          GitHubIssueLink: issue.html_url,
         },
       };
     } catch (err) {
       console.error(err);
       return {
-        outputs: {
-          GitHubResponse:
-            `An error was encountered during issue creation: \`${err.message}\``,
-        },
+        error:
+          `An error was encountered during issue creation: \`${err.message}\``,
       };
     }
   },
