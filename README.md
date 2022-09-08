@@ -57,8 +57,8 @@ instance as well as the [locally-running][run], or dev, instance. The deployed i
 is hosted on Slack while the dev instance runs directly on your computer. This
 is an important distinction to keep in mind for two reasons:
 
-1. [Triggers][create-trigger], which execute application Workflows, are instance-
-   specific. Each application instance needs its own set of triggers.
+1. [Triggers][create-trigger], which execute application Workflows, are
+   instance-specific. Each application instance needs its own set of triggers.
 2. Some `slack` CLI commands are instance-specific. For example, `slack deploy`
    deploys code for your _production_ instance to Slack hosting. `slack env`
    manages environment variables for your _production_ instance. `slack install`
