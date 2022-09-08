@@ -168,7 +168,7 @@ To stop running locally, press `<CTRL> + C` to end the process.
 ## Deploying Your App
 
 When you're done with development, you can deploy a production version of your app
-to Slack's infrastructure using `slack deploy`:
+to Slack hosted infrastructure using `slack deploy`:
 
 ```zsh
 $ slack deploy
