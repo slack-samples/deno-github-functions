@@ -28,12 +28,16 @@ const CreateIssueDefinition = DefineFunction({
   },
   output_parameters: {
     properties: {
-      GitHubResponse: {
+      GitHubIssueNumber: {
+        type: Schema.types.number,
+        description: "Issue number",
+      },
+      GitHubIssueLink: {
         type: Schema.types.string,
-        description: "Issue number and link",
+        description: "Issue link",
       },
     },
-    required: ["GitHubResponse"],
+    required: ["GitHubIssueNumber", "GitHubIssueLink"],
   },
 });
 
