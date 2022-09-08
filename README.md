@@ -113,7 +113,7 @@ $ slack env add GITHUB_TOKEN ACCESS_TOKEN
 [Triggers][triggers] execute a Workflow; they are an entry point into your
 application that are invoked automatically by Slack or manually by users.
 This application uses a [Link Trigger][link-triggers] to execute its Workflow
-in Slack. Link triggers generate a **Shortcut URL** which unfurl into a button
+in Slack. Link triggers generate a **Shortcut URL** that unfurls into a button
 within Slack. Shortcut URLs can be posted in a channel or added as a bookmark,
 and, when clicked, will run the associated Workflow.
 
