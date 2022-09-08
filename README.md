@@ -147,9 +147,9 @@ the deployed version by the application name in the list: the name with the suff
 `(dev)` is your locally-running version while the name without it is the deployed
 version.
 
-Once you selected the Workspace and the application instance, the `slack trigger create`
+After selecting a Workspace and application instance, the above `slack trigger create`
 command will output a Shortcut URL. Copy and paste this URL to a channel or add
-it as a bookmark.
+it as a bookmark in the Workspace you selected.
 
 You can try clicking it, too, but this link won't run the Workflow until the app
 is either running locally or deployed! Read on to learn how to run your project
