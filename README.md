@@ -187,7 +187,7 @@ After deploying, the [previously created Shortcut URL][create-trigger] associate
 with the production (non-`(dev)`) version of your app should begin the "Create New
 Issue" Workflow when clicked!
 
-### Viewing Activity Logs for Your Production App
+### Viewing Activity Logs
 
 Activity logs from the production instance of your application can be viewed with the `slack activity` command:
 
