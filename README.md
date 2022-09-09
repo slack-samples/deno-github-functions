@@ -121,12 +121,8 @@ $ slack env add GITHUB_TOKEN ACCESS_TOKEN
 
 ## Create a Link Trigger
 
-[Triggers][triggers] execute a Workflow; they are an entry point into your
-application that are invoked automatically by Slack or manually by users.
-This application uses a [Link Trigger][link-triggers] to execute its Workflow
-in Slack. Link triggers generate a **Shortcut URL** that unfurls into a button
-within Slack. Shortcut URLs can be posted in a channel or added as a bookmark,
-and, when clicked, will run the associated Workflow.
+[Triggers][triggers] execute Workflows: they are entry points into your application that are invoked automatically by Slack or manually by users.
+This application uses [Link Triggers][link-triggers] to execute Workflows. A Link Trigger generates a **Shortcut URL** that can be posted in a channel or added as a bookmark. When clicked, the Trigger will run the associated Workflow.
 
 To generate a Shortcut URL for a Workflow, we first create a Link Trigger. Link
 Triggers are unique to each installed version of your app, meaning Shortcut URLs
