@@ -189,7 +189,7 @@ Issue" Workflow when clicked!
 
 ### Viewing Activity Logs
 
-Activity logs from the production instance of your application can be viewed with the `slack activity` command:
+Activity logs for the production instance of your application can be viewed with the `slack activity` command:
 
 ```zsh
 $ slack activity
