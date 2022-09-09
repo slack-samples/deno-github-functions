@@ -10,8 +10,8 @@ Slack using functions and workflows.
   - [Install the Slack CLI](#install-the-slack-cli)
   - [Install the Sample App](#install-the-sample-app)
   - [GitHub Access Token](#github-access-token)
-- [Create a Link Trigger][create-trigger]
-- [Running Your Project Locally][run-locally]
+- [Create a Link Trigger](#create-a-link-trigger)
+- [Running Your Project Locally](#running-your-project-locally)
 - [Deploying Your App](#deploying-your-app)
   - [Viewing Activity Logs for Your Production App](#viewing-activity-logs-for-your-production-app)
 - [Project Structure](#project-structure)
@@ -50,21 +50,6 @@ $ cd my-github-app
 $ slack install
 ```
 
-#### Application Instances
-
-All Run-on-Slack applications come in two flavors: the [deployed][deploy], or
-production, instance as well as the [locally-running][run], or dev, instance.
-The deployed instance is hosted on Slack while the dev instance runs directly on
-your computer. This is an important distinction to keep in mind for two reasons:
-
-1. [Triggers][create-trigger], which execute application Workflows, are
-   instance-specific. Each application instance needs its own set of triggers.
-2. Some `slack` CLI commands are instance-specific. For example, `slack deploy`
-   deploys code for your _production_ instance to Slack hosting. `slack env`
-   manages environment variables for your _production_ instance. `slack install`
-   installs your _production_ instance to a Slack Workspace. `slack run` starts
-   your _dev_ instance in a process on your computer.
-
 ### GitHub Access Token
 
 A personal access token is required when calling the GitHub API. Tokens can be
@@ -99,10 +84,10 @@ tokens across local and deployed versions of the same app.
 
 ##### Locally-running application environment variables
 
-When [developing locally][run], variables found in the `.env` file at the root
-of your project are used. For your local development environment, rename
-`.env.sample` to `.env` and add your access token to the file contents
-(replacing `ACCESS_TOKEN` with your token):
+When [developing locally](https://api.slack.com/future/run), variables found in
+the `.env` file at the root of your project are used. For your local development
+environment, rename `.env.sample` to `.env` and add your access token to the
+file contents (replacing `ACCESS_TOKEN` with your token):
 
 ```bash
 # .env
@@ -111,9 +96,10 @@ GITHUB_TOKEN=ACCESS_TOKEN
 
 ##### Deployed application environment variables
 
-[Deployed apps][deploy] use variables added using `slack env`. To add your
-access token to a Workspace where your deployed app is installed, use the
-following command (once again, replacing `ACCESS_TOKEN` with your token):
+[Deployed apps](https://api.slack.com/future/deploy) use variables added using
+`slack env`. To add your access token to a Workspace where your deployed app is
+installed, use the following command (once again, replacing `ACCESS_TOKEN` with
+your token):
 
 ```zsh
 $ slack env add GITHUB_TOKEN ACCESS_TOKEN
@@ -121,16 +107,19 @@ $ slack env add GITHUB_TOKEN ACCESS_TOKEN
 
 ## Create a Link Trigger
 
-[Triggers][triggers] execute Workflows: they are entry points into your
-application that are invoked automatically by Slack or manually by users. This
-application uses [Link Triggers][link-triggers] to execute Workflows. A Link
-Trigger generates a **Shortcut URL** that can be posted in a channel or added as
-a bookmark. When clicked, the Trigger will run the associated Workflow.
+[Triggers](https://api.slack.com/future/triggers) execute Workflows: they are
+entry points into your application that are invoked automatically by Slack or
+manually by users. This application uses
+[Link Triggers](https://api.slack.com/future/triggers/link) to execute
+Workflows. A Link Trigger generates a **Shortcut URL** that can be posted in a
+channel or added as a bookmark. When clicked, the Trigger will run the
+associated Workflow.
 
 To generate a Shortcut URL for a Workflow, we first create a Link Trigger. Link
 Triggers are unique to each installed version of your app, meaning Shortcut URLs
-will be different across workspaces, as well as
-[between locally run and deployed apps][app-instances].
+will be different across workspaces, as well as between
+[locally run](#running-your-project-locally) and
+[deployed apps](#deploying-your-app).
 
 To create a Link Trigger for the "Create New Issue" Workflow, run the following
 command:
@@ -167,9 +156,10 @@ $ slack run
 Connected, awaiting events
 ```
 
-Once running, click the [previously created Shortcut URL][create-trigger]
-associated with the `(dev)` version of your app. This should begin your Workflow
-by opening a form to create a new GitHub issue!
+Once running, click the
+[previously created Shortcut URL](#create-a-link-trigger) associated with the
+`(dev)` version of your app. This should begin your Workflow by opening a form
+to create a new GitHub issue!
 
 To stop running locally, press `<CTRL> + C` to end the process.
 
@@ -182,7 +172,7 @@ app to Slack hosting using `slack deploy`:
 $ slack deploy
 ```
 
-After deploying, the [previously created Shortcut URL][create-trigger]
+After deploying, the [previously created Shortcut URL](#create-a-link-trigger)
 associated with the production (non-`(dev)`) version of your app should begin
 the "Create New Issue" Workflow when clicked!
 
@@ -224,9 +214,9 @@ to the next step.
 
 ### `/triggers`
 
-[Triggers][triggers] determine when Workflows are executed. A trigger file
-describes a scenario in which a workflow should be run, such as a user pressing
-a button or when a specific event occurs.
+[Triggers](https://api.slack.com/future/triggers) determine when Workflows are
+executed. A trigger file describes a scenario in which a workflow should be run,
+such as a user pressing a button or when a specific event occurs.
 
 ## Resources
 
@@ -238,11 +228,3 @@ To learn more about developing with the CLI, you can visit the following guides:
 
 To view all documentation and guides available, visit the
 [Overview page](https://api.slack.com/future/overview).
-
-[triggers]: https://api.slack.com/future/triggers
-[link-triggers]: https://api.slack.com/future/triggers/link
-[create-trigger]: #create-a-link-trigger
-[run-locally]: #running-your-project-locally
-[app-instances]: #application-instances
-[run]: https://api.slack.com/future/run
-[deploy]: https://api.slack.com/future/deploy
