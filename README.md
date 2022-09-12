@@ -8,12 +8,12 @@ Slack using functions and workflows.
 - [Supported Workflows](#supported-workflows)
 - [Setup](#setup)
   - [Install the Slack CLI](#install-the-slack-cli)
-  - [Install the Sample App](#install-the-sample-app)
+  - [Clone the Sample App](#clone-the-sample-app)
   - [GitHub Access Token](#github-access-token)
 - [Create a Link Trigger](#create-a-link-trigger)
 - [Running Your Project Locally](#running-your-project-locally)
 - [Deploying Your App](#deploying-your-app)
-  - [Viewing Activity Logs for Your Production App](#viewing-activity-logs-for-your-production-app)
+  - [Viewing Activity Logs](#viewing-activity-logs)
 - [Project Structure](#project-structure)
 - [Resources](#resources)
 
@@ -35,9 +35,9 @@ To use this sample, you first need to install and configure the Slack CLI.
 Step-by-step instructions can be found in our
 [Quickstart Guide](https://api.slack.com/future/quickstart).
 
-### Install the Sample App
+### Clone the Sample App
 
-Start by cloning this sample and installing it into a workspace:
+Start by cloning this repository:
 
 ```zsh
 # Clone this project onto your machine
@@ -45,9 +45,6 @@ $ slack create my-github-app -t slack-samples/deno-github-functions
 
 # Change into this project directory
 $ cd my-github-app
-
-# Install the production instance of the app to a workspace
-$ slack install
 ```
 
 ### GitHub Access Token
@@ -77,14 +74,14 @@ repositories, the `repo` scope must also be included.
 After selecting the necessary scopes, generate then copy your personal access
 token.
 
-#### Add the access token to environment variables
+#### Add GitHub access token to environment variables
 
 Storing your access token as an environment variable allows you to use different
 tokens across local and deployed versions of the same app.
 
-##### Locally-running application environment variables
+##### Development environment variables
 
-When [developing locally](https://api.slack.com/future/run), variables found in
+When [developing locally](https://api.slack.com/future/run), environemnt variables found in
 the `.env` file at the root of your project are used. For your local development
 environment, rename `.env.sample` to `.env` and add your access token to the
 file contents (replacing `ACCESS_TOKEN` with your token):
@@ -94,10 +91,10 @@ file contents (replacing `ACCESS_TOKEN` with your token):
 GITHUB_TOKEN=ACCESS_TOKEN
 ```
 
-##### Deployed application environment variables
+##### Production environment variables
 
-[Deployed apps](https://api.slack.com/future/deploy) use variables added using
-`slack env`. To add your access token to a Workspace where your deployed app is
+[Deployed apps](https://api.slack.com/future/deploy) use environment variables that are 
+added using `slack env`. To add your access token to a Workspace where your deployed app is
 installed, use the following command (once again, replacing `ACCESS_TOKEN` with
 your token):
 
@@ -107,17 +104,15 @@ $ slack env add GITHUB_TOKEN ACCESS_TOKEN
 
 ## Create a Link Trigger
 
-[Triggers](https://api.slack.com/future/triggers) execute Workflows: they are
-entry points into your application that are invoked automatically by Slack or
-manually by users. This application uses
-[Link Triggers](https://api.slack.com/future/triggers/link) to execute
-Workflows. A Link Trigger generates a **Shortcut URL** that can be posted in a
-channel or added as a bookmark. When clicked, the Trigger will run the
-associated Workflow.
+[Triggers](https://api.slack.com/future/triggers) are what cause Workflows to run. These Triggers
+can be invoked by a user, or automatically as a response to an event within Slack.
 
-To generate a Shortcut URL for a Workflow, we first create a Link Trigger. Link
-Triggers are unique to each installed version of your app, meaning Shortcut URLs
-will be different across workspaces, as well as between
+A [Link Trigger](https://api.slack.com/future/triggers/link) is a type of Trigger that generates 
+a **Shortcut URL** which, when posted in a channel or added as a bookmark, becomes a link. When 
+clicked, the Link Trigger will run the associated Workflow.
+
+Link Triggers are _unique to each installed version of your app_. This meaning that Shortcut URLs
+will be different across each workspace, as well as between
 [locally run](#running-your-project-locally) and
 [deployed apps](#deploying-your-app).
 
@@ -128,20 +123,15 @@ command:
 $ slack trigger create --trigger-def triggers/create_new_issue_shortcut.ts
 ```
 
-You will need to select the Workspace that you want to create your Link Trigger
-in _as well as_ which instance of your application to execute when invoked. You
-can differentiate between the locally-running version of your application from
-the deployed version by the application name in the list: the name with the
-suffix `(dev)` is your locally-running version while the name without it is the
-deployed version.
+When creating a Trigger, you must select the Workspace that you'd like to create
+the Trigger in. Each Workspace has a development version (denoted by `(dev)`),
+as well as a deployed version.
 
-After selecting a Workspace and application instance, the above
-`slack trigger create` command will output a Shortcut URL. Copy and paste this
-URL to a channel or add it as a bookmark in the Workspace you selected.
+After selecting a Workspace, the output provided will include the Link Trigger Shortcut URL. 
+Copy and paste this URL into a channel, or add it as a bookmark in the Workspace you selected.
 
-You can try clicking it, too, but this link won't run the Workflow until the app
-is either running locally or deployed! Read on to learn how to run your project
-locally and deploy it to Slack hosting.
+**Note: this link won't run the Workflow until the app is either running locally or deployed!**
+Read on to learn how to run your app locally and eventually deploy it to Slack hosting.
 
 ## Running Your Project Locally
 
@@ -165,7 +155,7 @@ To stop running locally, press `<CTRL> + C` to end the process.
 
 ## Deploying Your App
 
-When you're done with development, you can deploy a production version of your
+Once you're done with development, you can deploy the production version of your
 app to Slack hosting using `slack deploy`:
 
 ```zsh
