@@ -27,7 +27,8 @@ Slack using functions and workflows.
 
 Before getting started, make sure you have a development workspace where you
 have permissions to install apps. If you don’t have one set up, go ahead and
-[create one](https://slack.com/create).
+[create one](https://slack.com/create). Also, please note that the workspace
+requires any of [the Slack paid plans](https://slack.com/pricing).
 
 ### Install the Slack CLI
 
