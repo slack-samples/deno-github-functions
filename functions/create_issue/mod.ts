@@ -7,7 +7,7 @@ export default SlackFunction(
   async ({ inputs, env }) => {
     const headers = {
       Accept: "application/vnd.github+json",
-      Authorization: "Bearer " + env.GITHUB_TOKEN,
+      Authorization: `Bearer ${env.GITHUB_TOKEN}`,
       "Content-Type": "application/json",
     };
 
