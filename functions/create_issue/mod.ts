@@ -4,10 +4,16 @@ import CreateIssueDefinition from "./definition.ts";
 // https://docs.github.com/en/rest/issues/issues#create-an-issue
 export default SlackFunction(
   CreateIssueDefinition,
-  async ({ inputs, env }) => {
+  async ({ inputs, client }) => {
+    const token = await client.apiCall("apps.auth.external.get", {
+      external_token_id: inputs.githubAccessTokenId,
+    });
+
+    if (!token.ok) throw new Error("Failed to access auth token");
+
     const headers = {
       Accept: "application/vnd.github+json",
-      Authorization: "Bearer " + env.GITHUB_TOKEN,
+      Authorization: `Bearer ${token.external_token}`,
       "Content-Type": "application/json",
     };
 
