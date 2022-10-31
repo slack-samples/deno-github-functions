@@ -8,7 +8,7 @@ const GitHubProvider = DefineOAuth2Provider({
     provider_name: "GitHub",
     authorization_url: "https://github.com/login/oauth/authorize",
     token_url: "https://github.com/login/oauth/access_token",
-    client_id: "b89803122bbc853fb589",
+    client_id: "", // Add your Client ID here!
     scope: [
       "repo",
       "read:org",
