@@ -5,7 +5,7 @@ import CreateNewIssueWorkflow from "./workflows/create_new_issue.ts";
 export default Manifest({
   name: "Workflows for GitHub",
   description: "Bringing oft-used GitHub functionality into Slack",
-  icon: "assets/icon.png",
+  icon: "assets/default_new_app_icon.png",
   functions: [CreateIssueDefinition],
   workflows: [CreateNewIssueWorkflow],
   outgoingDomains: [],
