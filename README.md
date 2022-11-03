@@ -103,6 +103,15 @@ your deployed app is installed, use the following command (once again, replacing
 $ slack env add GITHUB_TOKEN ACCESS_TOKEN
 ```
 
+## Configure outgoing domains
+
+Hosted custom functions must declare which
+[outgoing domains](https://api.slack.com/future/manifest) are used when making
+network requests, including Github API calls. `api.github.com` is already
+configured as an outgoing domain in this sample's manifest. If your organization
+uses a separate Github Enterprise to make API calls to, add that domain to the
+`outgoingDomains` array in `manifest.ts`.
+
 ## Create a Link Trigger
 
 [Triggers](https://api.slack.com/future/triggers) are what cause Workflows to
