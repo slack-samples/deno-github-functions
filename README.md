@@ -10,6 +10,7 @@ Slack using functions and workflows.
   - [Install the Slack CLI](#install-the-slack-cli)
   - [Clone the Sample App](#clone-the-sample-app)
   - [GitHub Access Token](#github-access-token)
+  - [Configure Outgoing Domains](#configure-outgoing-domains)
 - [Create a Link Trigger](#create-a-link-trigger)
 - [Running Your Project Locally](#running-your-project-locally)
 - [Deploying Your App](#deploying-your-app)
@@ -103,7 +104,7 @@ your deployed app is installed, use the following command (once again, replacing
 $ slack env add GITHUB_TOKEN ACCESS_TOKEN
 ```
 
-## Configure outgoing domains
+### Configure Outgoing Domains
 
 Hosted custom functions must declare which
 [outgoing domains](https://api.slack.com/future/manifest) are used when making
