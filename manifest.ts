@@ -8,6 +8,8 @@ export default Manifest({
   icon: "assets/icon.png",
   functions: [CreateIssueDefinition],
   workflows: [CreateNewIssueWorkflow],
-  outgoingDomains: [],
+  // If your organizaiton uses a separate Github enterprise domain, add that domain to this list
+  // so that functions can make API calls to it.
+  outgoingDomains: ["api.github.com"],
   botScopes: ["commands", "chat:write", "chat:write.public"],
 });
