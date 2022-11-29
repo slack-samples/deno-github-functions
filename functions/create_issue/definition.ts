@@ -7,6 +7,10 @@ const CreateIssueDefinition = DefineFunction({
   source_file: "functions/create_issue/mod.ts",
   input_parameters: {
     properties: {
+      githubAccessTokenId: {
+        type: Schema.slack.types.oauth2,
+        oauth2_provider_key: "github",
+      },
       url: {
         type: Schema.types.string,
         description: "Repository URL",
@@ -24,7 +28,7 @@ const CreateIssueDefinition = DefineFunction({
         description: "Assignees",
       },
     },
-    required: ["url", "title"],
+    required: ["githubAccessTokenId", "url", "title"],
   },
   output_parameters: {
     properties: {

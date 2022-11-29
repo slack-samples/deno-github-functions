@@ -53,6 +53,7 @@ const issueFormData = CreateNewIssueWorkflow.addStep(
 );
 
 const issue = CreateNewIssueWorkflow.addStep(CreateIssueDefinition, {
+  githubAccessTokenId: {},
   url: issueFormData.outputs.fields.url,
   title: issueFormData.outputs.fields.title,
   description: issueFormData.outputs.fields.description,
