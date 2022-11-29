@@ -10,6 +10,7 @@ Slack using functions and workflows.
   - [Install the Slack CLI](#install-the-slack-cli)
   - [Clone the Sample App](#clone-the-sample-app)
   - [Register a GitHub App](#register-a-github-app)
+  - [Configure Outgoing Domains](#configure-outgoing-domains)
 - [Create a Link Trigger](#create-a-link-trigger)
 - [Running Your Project Locally](#running-your-project-locally)
 - [Deploying Your App](#deploying-your-app)
@@ -27,7 +28,8 @@ Slack using functions and workflows.
 
 Before getting started, make sure you have a development workspace where you
 have permissions to install apps. If you don’t have one set up, go ahead and
-[create one](https://slack.com/create).
+[create one](https://slack.com/create). Also, please note that the workspace
+requires any of [the Slack paid plans](https://slack.com/pricing).
 
 ### Install the Slack CLI
 
@@ -79,7 +81,7 @@ the value for `client_id` in `external_auth/github_provider.ts` – the custom
 OAuth2 provider definition for this GitHub app.
 
 Once complete, use `slack run` or `slack deploy` to update your local or
-deployed app.
+hosted app.
 
 #### Generate a Client Secret
 
@@ -107,8 +109,17 @@ GitHub account you want to authenticate with:
 $ slack external-auth add
 ```
 
-Once you've successfully connected your account, you're ready to create a link
-into your workflow!
+Once you've successfully connected your account, you're almost ready to create a
+link into your workflow!
+
+### Configure Outgoing Domains
+
+Hosted custom functions must declare which
+[outgoing domains](https://api.slack.com/future/manifest) are used when making
+network requests, including Github API calls. `api.github.com` is already
+configured as an outgoing domain in this sample's manifest. If your organization
+uses a separate Github Enterprise to make API calls to, add that domain to the
+`outgoingDomains` array in `manifest.ts`.
 
 ## Create a Link Trigger
 

@@ -9,6 +9,8 @@ export default Manifest({
   externalAuthProviders: [GitHubProvider],
   functions: [],
   workflows: [CreateNewIssueWorkflow],
-  outgoingDomains: [],
+  // If your organizaiton uses a separate Github enterprise domain, add that domain to this list
+  // so that functions can make API calls to it.
+  outgoingDomains: ["api.github.com"],
   botScopes: ["commands", "chat:write", "chat:write.public"],
 });
