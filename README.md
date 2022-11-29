@@ -55,17 +55,18 @@ With [external authentication](https://api.slack.com/future/external-auth) you
 can connect your GitHub account to your Slack app to easily access the GitHub
 API from a custom function, creating a base for programmatic personalizations!
 
-> Connecting your GitHub account with external auth allows your application to perform the API calls
-> used by functions as though it was _from this GitHub account_.
-> This means all issues created from the **Create GitHub issue** workflow will
-> appear to have been created by the account used when authenticating.
+> Connecting your GitHub account with external auth allows your application to
+> perform the API calls used by functions as though it was _from this GitHub
+> account_. This means all issues created from the **Create GitHub issue**
+> workflow will appear to have been created by the account used when
+> authenticating.
 
 #### Create a GitHub OAuth App
 
-Begin by creating a new GitHub OAuth App from
-your [developer settings on GitHub](https://github.com/settings/developers)
-using any **Application name** and **Homepage URL** you'd like, but leaving
-**Enable Device Flow** unchecked.
+Begin by creating a new GitHub OAuth App from your
+[developer settings on GitHub](https://github.com/settings/developers) using any
+**Application name** and **Homepage URL** you'd like, but leaving **Enable
+Device Flow** unchecked.
 
 The **Authorization callback URL** must be set to
 `https://oauth2.slack.com/external/auth/callback` to later exchange tokens and
@@ -76,12 +77,12 @@ application**!
 
 #### Add your GitHub Client ID
 
-From your new GitHub app's dashboard, copy the **Client ID** and paste it as
-the value for `client_id` in `external_auth/github_provider.ts` – the custom
-OAuth2 provider definition for this GitHub app.
+From your new GitHub app's dashboard, copy the **Client ID** and paste it as the
+value for `client_id` in `external_auth/github_provider.ts` – the custom OAuth2
+provider definition for this GitHub app.
 
-Once complete, use `slack run` or `slack deploy` to update your local or
-hosted app.
+Once complete, use `slack run` or `slack deploy` to update your local or hosted
+app.
 
 #### Generate a Client Secret
 
