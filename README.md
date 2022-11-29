@@ -103,8 +103,8 @@ With your GitHub OAuth application created and the Client ID and secret set,
 you're ready to initate the OAuth flow!
 
 If all the right values are in place, then the following command will prompt you
-to choose an app, select a provider (hint: choose the `github` one), then the
-GitHub account you want to authenticate with:
+to choose an app, select a provider (hint: choose the `github` one), then pick
+the GitHub account you want to authenticate with:
 
 ```zsh
 $ slack external-auth add
