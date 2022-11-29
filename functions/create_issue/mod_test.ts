@@ -6,6 +6,10 @@ import handler from "./mod.ts";
 // Replaces globalThis.fetch with the mocked copy
 mf.install();
 
+mf.mock("POST@/api/apps.auth.external.get", () => {
+  return new Response(`{"ok": true, "external_token": "example-token"}`);
+});
+
 mf.mock("POST@/repos/slack-samples/deno-github-functions/issues", () => {
   return new Response(
     `{"number": 123, "html_url": "https://www.example.com/expected-html-url"}`,
@@ -22,6 +26,7 @@ Deno.test("Create a GitHub issue with given inputs", async () => {
   const inputs = {
     url: "https://github.com/slack-samples/deno-github-functions",
     title: "The issue title",
+    githubAccessTokenId: {},
   };
   const { outputs } = await handler(createContext({ inputs, env }));
   assertEquals(outputs?.GitHubIssueNumber, 123);
