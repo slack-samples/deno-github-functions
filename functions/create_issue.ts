@@ -5,11 +5,17 @@ import {
   SlackFunction,
 } from "deno-slack-sdk/mod.ts";
 
+/**
+ * Functions are reusable building blocks of automation that accept inputs,
+ * perform calculations, and provide outputs. Functions can be used as steps in
+ * a workflow or independently.
+ * Learn more: https://api.slack.com/future/functions/custom
+ */
 export const CreateIssueDefinition = DefineFunction({
   callback_id: "create_issue",
   title: "Create GitHub issue",
   description: "Create a new GitHub issue in a repository",
-  source_file: "functions/create_issue.ts",
+  source_file: "functions/create_issue.ts", // The file with the exported function handler
   input_parameters: {
     properties: {
       githubAccessTokenId: {
@@ -20,6 +26,10 @@ export const CreateIssueDefinition = DefineFunction({
         type: Schema.types.string,
         description: "Repository URL",
       },
+      /**
+       * Custom objects can be wrapped with the DefineProperty function for
+       * strong typing when using these objects in the function handler.
+       */
       githubIssue: DefineProperty({
         type: Schema.types.object,
         properties: {
@@ -56,10 +66,18 @@ export const CreateIssueDefinition = DefineFunction({
   },
 });
 
-// https://docs.github.com/en/rest/issues/issues#create-an-issue
+/**
+ * The default export for a custom function accepts a function definition
+ * and a function handler that contains the custom logic for the function.
+ */
 export default SlackFunction(
   CreateIssueDefinition,
   async ({ inputs, client }) => {
+    /**
+     * Gather the stored external authentication access token using the access
+     * token id passed from the workflow's input. This token can be used to
+     * authorize requests made to an external service on behalf of the user.
+     */
     const token = await client.apps.auth.external.get({
       external_token_id: inputs.githubAccessTokenId,
     });
@@ -84,6 +102,8 @@ export default SlackFunction(
       const apiURL = hostname === "github.com"
         ? "api.github.com"
         : `${hostname}/api/v3`;
+
+      // https://docs.github.com/en/rest/issues/issues#create-an-issue
       const issueEndpoint = `https://${apiURL}/repos/${owner}/${repo}/issues`;
 
       const body = JSON.stringify({
