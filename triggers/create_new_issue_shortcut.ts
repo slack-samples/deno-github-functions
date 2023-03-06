@@ -7,7 +7,7 @@ const createNewIssueShortcut: Trigger<
   type: "shortcut",
   name: "Create GitHub issue",
   description: "Create a new GitHub issue in a repository",
-  workflow: "#/workflows/create_new_issue_workflow",
+  workflow: `#/workflows/${CreateNewIssueWorkflow.definition.callback_id}`,
   inputs: {
     interactivity: {
       value: "{{data.interactivity}}",
