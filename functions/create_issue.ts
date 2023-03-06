@@ -1,11 +1,66 @@
-import { SlackFunction } from "deno-slack-sdk/mod.ts";
-import CreateIssueDefinition from "./definition.ts";
+import {
+  DefineFunction,
+  DefineProperty,
+  Schema,
+  SlackFunction,
+} from "deno-slack-sdk/mod.ts";
+
+export const CreateIssueDefinition = DefineFunction({
+  callback_id: "create_issue",
+  title: "Create GitHub issue",
+  description: "Create a new GitHub issue in a repository",
+  source_file: "functions/create_issue.ts",
+  input_parameters: {
+    properties: {
+      githubAccessTokenId: {
+        type: Schema.slack.types.oauth2,
+        oauth2_provider_key: "github",
+      },
+      url: {
+        type: Schema.types.string,
+        description: "Repository URL",
+      },
+      githubIssue: DefineProperty({
+        type: Schema.types.object,
+        properties: {
+          title: {
+            type: Schema.types.string,
+            description: "Issue Title",
+          },
+          description: {
+            type: Schema.types.string,
+            description: "Issue Description",
+          },
+          assignees: {
+            type: Schema.types.string,
+            description: "Assignees",
+          },
+        },
+        required: ["title"],
+      }),
+    },
+    required: ["githubAccessTokenId", "url", "githubIssue"],
+  },
+  output_parameters: {
+    properties: {
+      GitHubIssueNumber: {
+        type: Schema.types.number,
+        description: "Issue number",
+      },
+      GitHubIssueLink: {
+        type: Schema.types.string,
+        description: "Issue link",
+      },
+    },
+    required: ["GitHubIssueNumber", "GitHubIssueLink"],
+  },
+});
 
 // https://docs.github.com/en/rest/issues/issues#create-an-issue
 export default SlackFunction(
   CreateIssueDefinition,
   async ({ inputs, client }) => {
-    const token = await client.apiCall("apps.auth.external.get", {
+    const token = await client.apps.auth.external.get({
       external_token_id: inputs.githubAccessTokenId,
     });
 
@@ -18,7 +73,8 @@ export default SlackFunction(
       "X-GitHub-Api-Version": "2022-11-28",
     };
 
-    const { url, title, description, assignees } = inputs;
+    const { url, githubIssue } = inputs;
+    const { title, description, assignees } = githubIssue;
 
     try {
       const { hostname, pathname } = new URL(url);

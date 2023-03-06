@@ -1,5 +1,5 @@
 import { DefineWorkflow, Schema } from "deno-slack-sdk/mod.ts";
-import CreateIssueDefinition from "../functions/create_issue/definition.ts";
+import { CreateIssueDefinition } from "../functions/create_issue.ts";
 
 const CreateNewIssueWorkflow = DefineWorkflow({
   callback_id: "create_new_issue_workflow",
@@ -53,11 +53,15 @@ const issueFormData = CreateNewIssueWorkflow.addStep(
 );
 
 const issue = CreateNewIssueWorkflow.addStep(CreateIssueDefinition, {
-  githubAccessTokenId: {},
+  githubAccessTokenId: {
+    credential_source: "DEVELOPER",
+  },
   url: issueFormData.outputs.fields.url,
-  title: issueFormData.outputs.fields.title,
-  description: issueFormData.outputs.fields.description,
-  assignees: issueFormData.outputs.fields.assignees,
+  githubIssue: {
+    title: issueFormData.outputs.fields.title,
+    description: issueFormData.outputs.fields.description,
+    assignees: issueFormData.outputs.fields.assignees,
+  },
 });
 
 CreateNewIssueWorkflow.addStep(Schema.slack.functions.SendMessage, {
