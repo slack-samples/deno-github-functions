@@ -9,7 +9,7 @@ Slack using functions and workflows.
 - [Setup](#setup)
   - [Install the Slack CLI](#install-the-slack-cli)
   - [Clone the Sample App](#clone-the-sample-app)
-  - [GitHub Access Token](#github-access-token)
+  - [Register a GitHub App](#register-a-github-app)
   - [Configure Outgoing Domains](#configure-outgoing-domains)
 - [Create a Link Trigger](#create-a-link-trigger)
 - [Running Your Project Locally](#running-your-project-locally)
@@ -49,60 +49,69 @@ $ slack create my-github-app -t slack-samples/deno-github-functions
 $ cd my-github-app
 ```
 
-### GitHub Access Token
+### Register a GitHub App
 
-A personal access token is required when calling the GitHub API. Tokens can be
-created in
-[your developer settings on GitHub](https://github.com/settings/tokens).
+With [external authentication](https://api.slack.com/future/external-auth) you
+can connect your GitHub account to your Slack app to easily access the GitHub
+API from a custom function, creating a base for programmatic personalizations!
 
-> Your personal access token allows your application to perform the API calls
-> used by functions as though it was _from your GitHub account_. That means all
-> issues created from the Create GitHub issue workflow will appear to have been
-> created by the account associated with the personal access token in use!
+> Connecting your GitHub account with external auth allows your application to
+> perform the API calls used by functions as though it was _from this GitHub
+> account_. This means all issues created from the **Create GitHub issue**
+> workflow will appear to have been created by the account used when
+> authenticating.
 
-#### Required Access Token Scopes
+#### Create a GitHub OAuth App
 
-To access public repositories, your personal access token should have the
-following scopes:
+Begin by creating a new GitHub OAuth App from your
+[developer settings on GitHub](https://github.com/settings/developers) using any
+**Application name** and **Homepage URL** you'd like, but leaving **Enable
+Device Flow** unchecked.
 
-- `public_repo`, `repo:invite`
-- `read:org`
-- `read:user`, `user:email`
-- `read:enterprise`
+The **Authorization callback URL** must be set to
+`https://oauth2.slack.com/external/auth/callback` to later exchange tokens and
+complete the OAuth2 handshake.
 
-To prevent `404: Not Found` errors when attempting to access private
-repositories, the `repo` scope must also be included.
+Once you're satisfied with these configurations, go ahead and click **Register
+application**!
 
-After selecting the necessary scopes, generate then copy your personal access
-token.
+#### Add your GitHub Client ID
 
-#### Add GitHub access token to environment variables
+From your new GitHub app's dashboard, copy the **Client ID** and paste it as the
+value for `client_id` in `external_auth/github_provider.ts` – the custom OAuth2
+provider definition for this GitHub app.
 
-Storing your access token as an environment variable allows you to use different
-tokens across local and deployed versions of the same app.
+Once complete, use `slack run` or `slack deploy` to update your local or hosted
+app.
 
-##### Development environment variables
+#### Generate a Client Secret
 
-When [developing locally](https://api.slack.com/future/run), environment
-variables found in the `.env` file at the root of your project are used. For
-local development, rename `.env.sample` to `.env` and add your access token to
-the file contents (replacing `ACCESS_TOKEN` with your token):
-
-```bash
-# .env
-GITHUB_TOKEN=ACCESS_TOKEN
-```
-
-##### Production environment variables
-
-[Deployed apps](https://api.slack.com/future/deploy) use environment variables
-that are added using `slack env`. To add your access token to a Workspace where
-your deployed app is installed, use the following command (once again, replacing
-`ACCESS_TOKEN` with your token):
+Returning to your GitHub app's dashboard, press **Generate a new client secret**
+then run the following command, replacing `GITHUB_CLIENT_SECRET` with your own
+secret:
 
 ```zsh
-$ slack env add GITHUB_TOKEN ACCESS_TOKEN
+$ slack external-auth add-secret --provider github --secret GITHUB_CLIENT_SECRET
 ```
+
+When prompted to select an app, choose the `(dev)` app only if you're running
+the app locally.
+
+#### Initiate the OAuth2 Flow
+
+With your GitHub OAuth application created and the Client ID and secret set,
+you're ready to initate the OAuth flow!
+
+If all the right values are in place, then the following command will prompt you
+to choose an app, select a provider (hint: choose the `github` one), then pick
+the GitHub account you want to authenticate with:
+
+```zsh
+$ slack external-auth add
+```
+
+Once you've successfully connected your account, you're almost ready to create a
+link into your workflow!
 
 ### Configure Outgoing Domains
 
@@ -115,34 +124,34 @@ uses a separate Github Enterprise to make API calls to, add that domain to the
 
 ## Create a Link Trigger
 
-[Triggers](https://api.slack.com/future/triggers) are what cause Workflows to
-run. These Triggers can be invoked by a user, or automatically as a response to
+[Triggers](https://api.slack.com/future/triggers) are what cause workflows to
+run. These triggers can be invoked by a user, or automatically as a response to
 an event within Slack.
 
-A [Link Trigger](https://api.slack.com/future/triggers/link) is a type of
+A [link trigger](https://api.slack.com/future/triggers/link) is a type of
 Trigger that generates a **Shortcut URL** which, when posted in a channel or
-added as a bookmark, becomes a link. When clicked, the Link Trigger will run the
-associated Workflow.
+added as a bookmark, becomes a link. When clicked, the link trigger will run the
+associated workflow.
 
-Link Triggers are _unique to each installed version of your app_. This means
+Link triggers are _unique to each installed version of your app_. This means
 that Shortcut URLs will be different across each workspace, as well as between
 [locally run](#running-your-project-locally) and
-[deployed apps](#deploying-your-app). When creating a Trigger, you must select
-the Workspace that you'd like to create the Trigger in. Each Workspace has a
+[deployed apps](#deploying-your-app). When creating a trigger, you must select
+the Workspace that you'd like to create the trigger in. Each Workspace has a
 development version (denoted by `(dev)`), as well as a deployed version.
 
-To create a Link Trigger for the "Create New Issue" Workflow, run the following
+To create a link trigger for the "Create New Issue" workflow, run the following
 command:
 
 ```zsh
 $ slack trigger create --trigger-def triggers/create_new_issue_shortcut.ts
 ```
 
-After selecting a Workspace, the output provided will include the Link Trigger
+After selecting a Workspace, the output provided will include the link trigger
 Shortcut URL. Copy and paste this URL into a channel as a message, or add it as
-a bookmark in a channel of the Workspace you selected.
+a bookmark in a channel of the workspace you selected.
 
-**Note: this link won't run the Workflow until the app is either running locally
+**Note: this link won't run the workflow until the app is either running locally
 or deployed!** Read on to learn how to run your app locally and eventually
 deploy it to Slack hosting.
 
@@ -161,7 +170,7 @@ Connected, awaiting events
 
 Once running, click the
 [previously created Shortcut URL](#create-a-link-trigger) associated with the
-`(dev)` version of your app. This should start a Workflow that opens a form used
+`(dev)` version of your app. This should start a workflow that opens a form used
 to create a new GitHub issue!
 
 To stop running locally, press `<CTRL> + C` to end the process.
@@ -175,9 +184,9 @@ app to Slack hosting using `slack deploy`:
 $ slack deploy
 ```
 
-After deploying, [create a new Link Trigger](#create-a-link-trigger) for the
-production version of your app (not appended with `(dev)`). Once the Trigger is
-invoked, the Workflow should run just as it did in when developing locally.
+After deploying, [create a new link trigger](#create-a-link-trigger) for the
+production version of your app (not appended with `(dev)`). Once the trigger is
+invoked, the workflow should run just as it did in when developing locally.
 
 ### Viewing Activity Logs
 
@@ -204,11 +213,11 @@ script hooks that are executed by the CLI and implemented by the SDK.
 
 [Functions](https://api.slack.com/future/functions) are reusable building blocks
 of automation that accept inputs, perform calculations, and provide outputs.
-Functions can be used independently or as steps in Workflows.
+Functions can be used independently or as steps in workflows.
 
 ### `/workflows`
 
-A [Workflow](https://api.slack.com/future/workflows) is a set of steps that are
+A [workflow](https://api.slack.com/future/workflows) is a set of steps that are
 executed in order. Each step in a Workflow is a function.
 
 Workflows can be configured to run without user input or they can collect input
@@ -217,7 +226,7 @@ to the next step.
 
 ### `/triggers`
 
-[Triggers](https://api.slack.com/future/triggers) determine when Workflows are
+[Triggers](https://api.slack.com/future/triggers) determine when workflows are
 executed. A trigger file describes a scenario in which a workflow should be run,
 such as a user pressing a button or when a specific event occurs.
 
