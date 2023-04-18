@@ -94,7 +94,7 @@ secret:
 $ slack external-auth add-secret --provider github --secret GITHUB_CLIENT_SECRET
 ```
 
-When prompted to select an app, choose the `(dev)` app only if you're running
+When prompted to select an app, choose the `(local)` app only if you're running
 the app locally.
 
 #### Initiate the OAuth2 Flow
@@ -138,7 +138,7 @@ that Shortcut URLs will be different across each workspace, as well as between
 [locally run](#running-your-project-locally) and
 [deployed apps](#deploying-your-app). When creating a trigger, you must select
 the Workspace that you'd like to create the trigger in. Each Workspace has a
-development version (denoted by `(dev)`), as well as a deployed version.
+development version (denoted by `(local)`), as well as a deployed version.
 
 To create a link trigger for the "Create New Issue" workflow, run the following
 command:
@@ -159,7 +159,7 @@ deploy it to Slack hosting.
 
 While building your app, you can see your changes propagated to your workspace
 in real-time with `slack run`. In both the CLI and in Slack, you'll know an app
-is the development version if the name has the string `(dev)` appended.
+is the development version if the name has the string `(local)` appended.
 
 ```zsh
 # Run app locally
@@ -170,8 +170,8 @@ Connected, awaiting events
 
 Once running, click the
 [previously created Shortcut URL](#create-a-link-trigger) associated with the
-`(dev)` version of your app. This should start a workflow that opens a form used
-to create a new GitHub issue!
+`(local)` version of your app. This should start a workflow that opens a form
+used to create a new GitHub issue!
 
 To stop running locally, press `<CTRL> + C` to end the process.
 
@@ -185,8 +185,8 @@ $ slack deploy
 ```
 
 After deploying, [create a new link trigger](#create-a-link-trigger) for the
-production version of your app (not appended with `(dev)`). Once the trigger is
-invoked, the workflow should run just as it did in when developing locally.
+production version of your app (not appended with `(local)`). Once the trigger
+is invoked, the workflow should run just as it did in when developing locally.
 
 ### Viewing Activity Logs
 
