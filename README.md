@@ -120,7 +120,7 @@ tokens used for your app will be shared by all collaborators. For this reason,
 we recommend creating your GitHub OAuth App using an organization account so all
 collaborators can access the same account.
 
-Local development does not encounter this issue, as each developer will have
+Local development does not require a shared account, as each developer will have
 their own local app and can individually add their own external authentication
 tokens.
 
