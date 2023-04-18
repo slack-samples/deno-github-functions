@@ -113,6 +113,17 @@ $ slack external-auth add
 Once you've successfully connected your account, you're almost ready to create a
 link into your workflow!
 
+#### Collaborating with External Authentication
+
+When developing collaboratively on a deployed app, the external authentication
+tokens used for your app will be shared by all collaborators. For this reason,
+we recommend creating your GitHub OAuth App using an organization account so all
+collaborators can access the same account.
+
+Local development does not encounter this issue, as each developer will have
+their own local app and can individually add their own external authentication
+tokens.
+
 ### Configure Outgoing Domains
 
 Hosted custom functions must declare which
