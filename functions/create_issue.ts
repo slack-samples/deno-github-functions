@@ -1,9 +1,5 @@
-import {
-  DefineFunction,
-  DefineProperty,
-  Schema,
-  SlackFunction,
-} from "deno-slack-sdk/mod.ts";
+import { DefineFunction, Schema, SlackFunction } from "deno-slack-sdk/mod.ts";
+import { GitHubIssueCustomType } from "./types.ts";
 
 /**
  * Functions are reusable building blocks of automation that accept inputs,
@@ -30,24 +26,9 @@ export const CreateIssueDefinition = DefineFunction({
        * Custom objects can be wrapped with the DefineProperty function for
        * strong typing when using these objects in the function handler.
        */
-      githubIssue: DefineProperty({
-        type: Schema.types.object,
-        properties: {
-          title: {
-            type: Schema.types.string,
-            description: "Issue Title",
-          },
-          description: {
-            type: Schema.types.string,
-            description: "Issue Description",
-          },
-          assignees: {
-            type: Schema.types.string,
-            description: "Assignees",
-          },
-        },
-        required: ["title"],
-      }),
+      githubIssue: {
+        type: GitHubIssueCustomType,
+      },
     },
     required: ["githubAccessTokenId", "url", "githubIssue"],
   },
