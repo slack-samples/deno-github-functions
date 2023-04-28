@@ -77,10 +77,10 @@ application**!
 
 #### Add your GitHub Client ID
 
-Start by renaming the `.env.example` file at the top level of your project
-to `.env`, being sure not to commit this file to version control. This file
-will store sensitive, app-specific variables that are determined by the
-environment being used.
+Start by renaming the `.env.example` file at the top level of your project to
+`.env`, being sure not to commit this file to version control. This file will
+store sensitive, app-specific variables that are determined by the environment
+being used.
 
 From your new GitHub app's dashboard, copy the **Client ID** and paste it as the
 value for `GITHUB_CLIENT_ID` in the `.env` file. This value will be used in
