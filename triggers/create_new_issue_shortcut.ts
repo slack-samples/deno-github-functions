@@ -4,7 +4,7 @@ import CreateNewIssueWorkflow from "../workflows/create_new_issue.ts";
 /**
  * Triggers determine when workflows are executed. A trigger file describes a
  * scenario in which a workflow should be run, such as a user clicking a link.
- * Learn more: https://api.slack.com/future/triggers/link
+ * Learn more: https://api.slack.com/automation/triggers/link
  */
 const createNewIssueShortcut: Trigger<
   typeof CreateNewIssueWorkflow.definition

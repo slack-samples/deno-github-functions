@@ -4,7 +4,7 @@ import { DefineOAuth2Provider, Schema } from "deno-slack-sdk/mod.ts";
  * External authentication uses the OAuth 2.0 protocol to connect with
  * accounts across various services. Once authenticated, an access token
  * can be used to interact with the service on behalf of the user.
- * Learn more: https://api.slack.com/future/external-auth
+ * Learn more: https://api.slack.com/automation/external-auth
  */
 
 // https://docs.github.com/en/developers/apps/building-oauth-apps/authorizing-oauth-apps#web-application-flow
