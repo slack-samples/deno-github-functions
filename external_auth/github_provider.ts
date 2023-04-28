@@ -1,4 +1,5 @@
 import { DefineOAuth2Provider, Schema } from "deno-slack-sdk/mod.ts";
+import "std/dotenv/load.ts";
 
 /**
  * External authentication uses the OAuth 2.0 protocol to connect with
@@ -15,7 +16,7 @@ const GitHubProvider = DefineOAuth2Provider({
     provider_name: "GitHub",
     authorization_url: "https://github.com/login/oauth/authorize",
     token_url: "https://github.com/login/oauth/access_token",
-    client_id: "", // TODO: Add your Client ID here!
+    client_id: Deno.env.get("GITHUB_CLIENT_ID")!,
     scope: [
       "repo",
       "read:org",
