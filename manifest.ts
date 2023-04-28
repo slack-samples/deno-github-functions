@@ -5,7 +5,7 @@ import CreateNewIssueWorkflow from "./workflows/create_new_issue.ts";
 /**
  * The app manifest contains the app's configuration. This file defines
  * attributes like app name, description, available workflows, and more.
- * Learn more: https://api.slack.com/future/manifest
+ * Learn more: https://api.slack.com/automation/manifest
  */
 export default Manifest({
   name: "Workflows for GitHub",
