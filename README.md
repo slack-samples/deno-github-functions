@@ -77,12 +77,23 @@ application**!
 
 #### Add your GitHub Client ID
 
+Start by renaming the `.env.example` file at the top level of your project to
+`.env`, being sure not to commit this file to version control. This file will
+store sensitive, app-specific variables that are determined by the environment
+being used.
+
 From your new GitHub app's dashboard, copy the **Client ID** and paste it as the
-value for `client_id` in `external_auth/github_provider.ts` – the custom OAuth2
-provider definition for this GitHub app.
+value for `GITHUB_CLIENT_ID` in the `.env` file. This value will be used in
+`external_auth/github_provider.ts` – the custom OAuth2 provider definition for
+this GitHub app.
 
 Once complete, use `slack run` or `slack deploy` to update your local or hosted
-app.
+app!
+
+> Note: Unlike environment variables used at runtime, this variable is only used
+> when generating your app manifest. Therefore, you do **not** need to use the
+> `slack env add` command to set this value for
+> [deployed apps](#deploying-your-app).
 
 #### Generate a Client Secret
 
