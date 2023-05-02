@@ -61,7 +61,7 @@ const issueFormData = CreateNewIssueWorkflow.addStep(
           "GitHub username(s) of the user(s) to assign the issue to (separated by commas)",
         type: Schema.types.string,
       }],
-      required: ["url", "title"],
+      required: ["url", "title", "description", "assignees"],
     },
   },
 );

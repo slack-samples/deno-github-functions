@@ -1,4 +1,5 @@
 import { Trigger } from "deno-slack-sdk/types.ts";
+import { TriggerContextData, TriggerTypes } from "deno-slack-api/mod.ts";
 import CreateNewIssueWorkflow from "../workflows/create_new_issue.ts";
 
 /**
@@ -9,16 +10,16 @@ import CreateNewIssueWorkflow from "../workflows/create_new_issue.ts";
 const createNewIssueShortcut: Trigger<
   typeof CreateNewIssueWorkflow.definition
 > = {
-  type: "shortcut",
+  type: TriggerTypes.Shortcut,
   name: "Create GitHub issue",
   description: "Create a new GitHub issue in a repository",
   workflow: `#/workflows/${CreateNewIssueWorkflow.definition.callback_id}`,
   inputs: {
     interactivity: {
-      value: "{{data.interactivity}}",
+      value: TriggerContextData.Shortcut.interactivity,
     },
     channel: {
-      value: "{{data.channel_id}}",
+      value: TriggerContextData.Shortcut.channel_id,
     },
   },
 };
