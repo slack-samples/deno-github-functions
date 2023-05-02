@@ -9,7 +9,7 @@ import {
  * Functions are reusable building blocks of automation that accept inputs,
  * perform calculations, and provide outputs. Functions can be used as steps in
  * a workflow or independently.
- * Learn more: https://api.slack.com/future/functions/custom
+ * Learn more: https://api.slack.com/automation/functions/custom
  */
 export const CreateIssueDefinition = DefineFunction({
   callback_id: "create_issue",
