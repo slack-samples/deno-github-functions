@@ -9,7 +9,7 @@ Slack using functions and workflows.
 - [Setup](#setup)
   - [Install the Slack CLI](#install-the-slack-cli)
   - [Clone the Sample App](#clone-the-sample-app)
-  - [Register a GitHub App](#register-a-github-app)
+  - [Register an OAuth App on GitHub](#register-an-oauth-app-on-github)
   - [Configure Outgoing Domains](#configure-outgoing-domains)
 - [Create a Link Trigger](#create-a-link-trigger)
 - [Running Your Project Locally](#running-your-project-locally)
@@ -61,9 +61,9 @@ API from a custom function, creating a base for programmatic personalizations!
 > workflow will appear to have been created by the account used when
 > authenticating.
 
-#### Create a GitHub OAuth App
+#### Create an OAuth App on GitHub
 
-Begin by creating a new GitHub OAuth App from your
+Begin by creating a new OAuth App from your
 [developer settings on GitHub](https://github.com/settings/developers) using any
 **Application name** and **Homepage URL** you'd like, but leaving **Enable
 Device Flow** unchecked.
