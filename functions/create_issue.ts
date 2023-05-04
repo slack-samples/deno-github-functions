@@ -46,7 +46,7 @@ export const CreateIssueDefinition = DefineFunction({
             description: "Assignees",
           },
         },
-        required: ["title"],
+        required: ["title", "description", "assignees"],
       }),
     },
     required: ["githubAccessTokenId", "url", "githubIssue"],
