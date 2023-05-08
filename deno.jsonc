@@ -1,5 +1,17 @@
 {
+  "$schema": "https://deno.land/x/deno/cli/schemas/config-file.v1.json",
+  "fmt": {
+    "files": {
+      "include": ["README.md", "datastores", "functions", "manifest.ts", "triggers", "workflows"]
+    }
+  },
   "importMap": "import_map.json",
+  "lint": {
+    "files": {
+      "include": ["datastores", "functions", "manifest.ts", "triggers", "workflows"]
+    }
+  },
+  "lock": false,
   "tasks": {
     "test": "deno fmt --check && deno lint && deno test --allow-read --allow-none"
   }
