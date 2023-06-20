@@ -1,5 +1,5 @@
 import { DefineWorkflow, Schema } from "deno-slack-sdk/mod.ts";
-import { CreateIssueDefinition } from "../functions/create_issue.ts";
+import { Connectors } from "deno-slack-hub/mod.ts";
 
 /**
  * A workflow is a set of steps that are executed in order. Each step in a
@@ -42,9 +42,11 @@ const issueFormData = CreateNewIssueWorkflow.addStep(
     fields: {
       elements: [{
         name: "url",
-        title: "Repository URL",
-        description: "The GitHub URL of the repository",
+        title: "API Repository URL",
+        description:
+          "The API GitHub URL of the repository; https://api.github.com/repos/OWNER/REPO",
         type: Schema.types.string,
+        default: "https://api.github.com/repos/OWNER/REPO",
       }, {
         name: "title",
         title: "Issue title",
@@ -54,40 +56,26 @@ const issueFormData = CreateNewIssueWorkflow.addStep(
         title: "Issue description",
         type: Schema.types.string,
         long: true,
-      }, {
-        name: "assignees",
-        title: "Issue assignees",
-        description:
-          "GitHub username(s) of the user(s) to assign the issue to (separated by commas)",
-        type: Schema.types.string,
       }],
-      required: ["url", "title", "description", "assignees"],
+      required: ["url", "title", "description"],
     },
   },
 );
 
 /**
- * A custom function can be added as a workflow step to modify input data,
- * interact with an external API, and return responses from the API for use in
+ * A connector function can be added as a workflow step to
+ * interact with an external API, and return responses for use in
  * later steps.
- * Learn more: https://api.slack.com/automation/functions/custom
  */
-const issue = CreateNewIssueWorkflow.addStep(CreateIssueDefinition, {
-  /**
-   * The credential source defines which external authentication tokens are
-   * passed to the function. These are automatically injected at runtime.
-   * Learn more: https://api.slack.com/automation/external-auth#workflow
-   */
-  githubAccessTokenId: {
-    credential_source: "DEVELOPER",
-  },
-  url: issueFormData.outputs.fields.url,
-  githubIssue: {
+const issue = CreateNewIssueWorkflow.addStep(
+  Connectors.GithubCloud.functions.CreateIssue,
+  {
+    github_access_token: { credential_source: "END_USER" },
+    repository: issueFormData.outputs.fields.url,
     title: issueFormData.outputs.fields.title,
     description: issueFormData.outputs.fields.description,
-    assignees: issueFormData.outputs.fields.assignees,
   },
-});
+);
 
 /**
  * Messages can be sent into a channel with the built-in SendMessage function.
@@ -96,8 +84,8 @@ const issue = CreateNewIssueWorkflow.addStep(CreateIssueDefinition, {
 CreateNewIssueWorkflow.addStep(Schema.slack.functions.SendMessage, {
   channel_id: CreateNewIssueWorkflow.inputs.channel,
   message:
-    `Issue #${issue.outputs.GitHubIssueNumber} has been successfully created\n` +
-    `Link to issue: ${issue.outputs.GitHubIssueLink}`,
+    `Issue #${issue.outputs.issue_number} has been successfully created\n` +
+    `Link to issue: ${issue.outputs.issue_url}`,
 });
 
 export default CreateNewIssueWorkflow;
