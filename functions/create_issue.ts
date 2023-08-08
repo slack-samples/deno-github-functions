@@ -1,9 +1,4 @@
-import {
-  DefineFunction,
-  DefineProperty,
-  Schema,
-  SlackFunction,
-} from "deno-slack-sdk/mod.ts";
+import { DefineFunction, Schema, SlackFunction } from "deno-slack-sdk/mod.ts";
 
 /**
  * Functions are reusable building blocks of automation that accept inputs,
@@ -26,30 +21,26 @@ export const CreateIssueDefinition = DefineFunction({
         type: Schema.types.string,
         description: "Repository URL",
       },
-      /**
-       * Custom objects can be wrapped with the DefineProperty function for
-       * strong typing when using these objects in the function handler.
-       */
-      githubIssue: DefineProperty({
-        type: Schema.types.object,
-        properties: {
-          title: {
-            type: Schema.types.string,
-            description: "Issue Title",
-          },
-          description: {
-            type: Schema.types.string,
-            description: "Issue Description",
-          },
-          assignees: {
-            type: Schema.types.string,
-            description: "Assignees",
-          },
-        },
-        required: ["title", "description", "assignees"],
-      }),
+      title: {
+        type: Schema.types.string,
+        description: "Issue Title",
+      },
+      description: {
+        type: Schema.types.string,
+        description: "Issue Description",
+      },
+      assignees: {
+        type: Schema.types.string,
+        description: "Assignees",
+      },
     },
-    required: ["githubAccessTokenId", "url", "githubIssue"],
+    required: [
+      "githubAccessTokenId",
+      "url",
+      "title",
+      "description",
+      "assignees",
+    ],
   },
   output_parameters: {
     properties: {
@@ -91,8 +82,7 @@ export default SlackFunction(
       "X-GitHub-Api-Version": "2022-11-28",
     };
 
-    const { url, githubIssue } = inputs;
-    const { title, description, assignees } = githubIssue;
+    const { url, title, description, assignees } = inputs;
 
     try {
       const { hostname, pathname } = new URL(url);

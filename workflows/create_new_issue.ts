@@ -82,11 +82,9 @@ const issue = CreateNewIssueWorkflow.addStep(CreateIssueDefinition, {
     credential_source: "DEVELOPER",
   },
   url: issueFormData.outputs.fields.url,
-  githubIssue: {
-    title: issueFormData.outputs.fields.title,
-    description: issueFormData.outputs.fields.description,
-    assignees: issueFormData.outputs.fields.assignees,
-  },
+  title: issueFormData.outputs.fields.title,
+  description: issueFormData.outputs.fields.description,
+  assignees: issueFormData.outputs.fields.assignees,
 });
 
 /**

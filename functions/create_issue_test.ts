@@ -34,11 +34,9 @@ Deno.test("Create a GitHub issue with given inputs", async () => {
   const inputs = {
     githubAccessTokenId: {},
     url: "https://github.com/slack-samples/deno-github-functions",
-    githubIssue: {
-      title: "The issue title",
-      description: "issue description",
-      assignees: "batman",
-    },
+    title: "The issue title",
+    description: "issue description",
+    assignees: "batman",
   };
   const { outputs } = await handler(createContext({ inputs, env }));
   assertEquals(outputs?.GitHubIssueNumber, 123);
