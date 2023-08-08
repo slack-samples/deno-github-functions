@@ -121,6 +121,12 @@ the GitHub account you want to authenticate with:
 $ slack external-auth add
 ```
 
+After you've added your authentication, you'll need to select it using the following command.
+
+```zsh
+$ slack external-auth select-auth
+```
+
 Once you've successfully connected your account, you're almost ready to create a
 link into your workflow!
 
