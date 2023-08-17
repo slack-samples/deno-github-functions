@@ -121,7 +121,8 @@ the GitHub account you want to authenticate with:
 $ slack external-auth add
 ```
 
-After you've added your authentication, you'll need to select it using the following command.
+After you've added your authentication, you'll need to assign it to the
+`#/workflows/create_new_issue_workflow` workflow using the following command:
 
 ```zsh
 $ slack external-auth select-auth
