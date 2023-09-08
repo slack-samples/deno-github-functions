@@ -189,8 +189,8 @@ Connected, awaiting events
 
 Once running, click the
 [previously created Shortcut URL](#create-a-link-trigger) associated with the
-`(local)` version of your app. This should start a workflow that opens a form
-to connect your GitHub account and create a new issue!
+`(local)` version of your app. This should start a workflow that opens a form to
+connect your GitHub account and create a new issue!
 
 To stop running locally, press `<CTRL> + C` to end the process.
 
