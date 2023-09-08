@@ -79,7 +79,7 @@ const issue = CreateNewIssueWorkflow.addStep(CreateIssueDefinition, {
    * Learn more: https://api.slack.com/automation/external-auth#workflow
    */
   githubAccessTokenId: {
-    credential_source: "DEVELOPER",
+    credential_source: "END_USER",
   },
   url: issueFormData.outputs.fields.url,
   title: issueFormData.outputs.fields.title,

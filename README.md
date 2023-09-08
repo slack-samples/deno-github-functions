@@ -49,7 +49,7 @@ $ slack create my-github-app -t slack-samples/deno-github-functions
 $ cd my-github-app
 ```
 
-### Register a GitHub App
+### Register an OAuth App on GitHub
 
 With [external authentication](https://api.slack.com/future/external-auth) you
 can connect your GitHub account to your Slack app to easily access the GitHub
@@ -111,25 +111,15 @@ the app locally.
 #### Initiate the OAuth2 Flow
 
 With your GitHub OAuth application created and the Client ID and secret set,
-you're ready to initate the OAuth flow!
+you're just about ready to initate the OAuth flow!
 
-If all the right values are in place, then the following command will prompt you
-to choose an app, select a provider (hint: choose the `github` one), then pick
-the GitHub account you want to authenticate with:
+The "Create New Issue" workflow collects credentials using the
+[end user tokens](https://api.slack.com/automation/external-auth#workflow__using-end-user-tokens)
+that are gathered when this workflow is invoked. This prompts the person running
+the workflow to authenticate with GitHub and then performs actions as the
+authenticated account.
 
-```zsh
-$ slack external-auth add
-```
-
-After you've added your authentication, you'll need to assign it to the
-`#/workflows/create_new_issue_workflow` workflow using the following command:
-
-```zsh
-$ slack external-auth select-auth
-```
-
-Once you've successfully connected your account, you're almost ready to create a
-link into your workflow!
+Keep reading on to create a link into this workflow and to connect your account!
 
 #### Collaborating with External Authentication
 
@@ -200,7 +190,7 @@ Connected, awaiting events
 Once running, click the
 [previously created Shortcut URL](#create-a-link-trigger) associated with the
 `(local)` version of your app. This should start a workflow that opens a form
-used to create a new GitHub issue!
+to connect your GitHub account and create a new issue!
 
 To stop running locally, press `<CTRL> + C` to end the process.
 
