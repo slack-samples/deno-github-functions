@@ -121,8 +121,8 @@ the GitHub account you want to authenticate with:
 $ slack external-auth add
 ```
 
-**Note: when working with repositories that are part of an organization, be sure to grant access to
-that organization when authorizing your OAuth app.**
+**Note: when working with repositories that are part of an organization, be sure
+to grant access to that organization when authorizing your OAuth app.**
 
 After you've added your authentication, you'll need to assign it to the
 `#/workflows/create_new_issue_workflow` workflow using the following command:
