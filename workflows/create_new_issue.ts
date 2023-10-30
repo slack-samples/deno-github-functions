@@ -45,6 +45,7 @@ const issueFormData = CreateNewIssueWorkflow.addStep(
         title: "Repository URL",
         description: "The GitHub URL of the repository",
         type: Schema.types.string,
+        format: "url",
       }, {
         name: "title",
         title: "Issue title",
