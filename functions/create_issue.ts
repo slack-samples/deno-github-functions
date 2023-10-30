@@ -38,8 +38,6 @@ export const CreateIssueDefinition = DefineFunction({
       "githubAccessTokenId",
       "url",
       "title",
-      "description",
-      "assignees",
     ],
   },
   output_parameters: {
