@@ -35,7 +35,7 @@ requires any of [the Slack paid plans](https://slack.com/pricing).
 
 To use this sample, you first need to install and configure the Slack CLI.
 Step-by-step instructions can be found in our
-[Quickstart Guide](https://api.slack.com/future/quickstart).
+[Quickstart Guide](https://api.slack.com/automation/quickstart).
 
 ### Clone the Sample App
 
@@ -51,9 +51,10 @@ $ cd my-github-app
 
 ### Register a GitHub App
 
-With [external authentication](https://api.slack.com/future/external-auth) you
-can connect your GitHub account to your Slack app to easily access the GitHub
-API from a custom function, creating a base for programmatic personalizations!
+With [external authentication](https://api.slack.com/automation/external-auth)
+you can connect your GitHub account to your Slack app to easily access the
+GitHub API from a custom function, creating a base for programmatic
+personalizations!
 
 > Connecting your GitHub account with external auth allows your application to
 > perform the API calls used by functions as though it was _from this GitHub
@@ -148,19 +149,19 @@ tokens.
 ### Configure Outgoing Domains
 
 Hosted custom functions must declare which
-[outgoing domains](https://api.slack.com/future/manifest) are used when making
-network requests, including Github API calls. `api.github.com` is already
+[outgoing domains](https://api.slack.com/automation/manifest) are used when
+making network requests, including Github API calls. `api.github.com` is already
 configured as an outgoing domain in this sample's manifest. If your organization
 uses a separate Github Enterprise to make API calls to, add that domain to the
 `outgoingDomains` array in `manifest.ts`.
 
 ## Create a Link Trigger
 
-[Triggers](https://api.slack.com/future/triggers) are what cause workflows to
-run. These triggers can be invoked by a user, or automatically as a response to
-an event within Slack.
+[Triggers](https://api.slack.com/automation/triggers) are what cause workflows
+to run. These triggers can be invoked by a user, or automatically as a response
+to an event within Slack.
 
-A [link trigger](https://api.slack.com/future/triggers/link) is a type of
+A [link trigger](https://api.slack.com/automation/triggers/link) is a type of
 Trigger that generates a **Shortcut URL** which, when posted in a channel or
 added as a bookmark, becomes a link. When clicked, the link trigger will run the
 associated workflow.
@@ -233,7 +234,7 @@ $ slack activity
 
 ### `manifest.ts`
 
-The [app manifest](https://api.slack.com/future/manifest) contains the app's
+The [app manifest](https://api.slack.com/automation/manifest) contains the app's
 configuration. This file defines attributes like app name and description.
 
 ### `slack.json`
@@ -243,32 +244,32 @@ script hooks that are executed by the CLI and implemented by the SDK.
 
 ### `/functions`
 
-[Functions](https://api.slack.com/future/functions) are reusable building blocks
-of automation that accept inputs, perform calculations, and provide outputs.
-Functions can be used independently or as steps in workflows.
+[Functions](https://api.slack.com/automation/functions) are reusable building
+blocks of automation that accept inputs, perform calculations, and provide
+outputs. Functions can be used independently or as steps in workflows.
 
 ### `/workflows`
 
-A [workflow](https://api.slack.com/future/workflows) is a set of steps that are
-executed in order. Each step in a Workflow is a function.
+A [workflow](https://api.slack.com/automation/workflows) is a set of steps that
+are executed in order. Each step in a Workflow is a function.
 
 Workflows can be configured to run without user input or they can collect input
-by beginning with a [form](https://api.slack.com/future/forms) before continuing
-to the next step.
+by beginning with a [form](https://api.slack.com/automation/forms) before
+continuing to the next step.
 
 ### `/triggers`
 
-[Triggers](https://api.slack.com/future/triggers) determine when workflows are
-executed. A trigger file describes a scenario in which a workflow should be run,
-such as a user pressing a button or when a specific event occurs.
+[Triggers](https://api.slack.com/automation/triggers) determine when workflows
+are executed. A trigger file describes a scenario in which a workflow should be
+run, such as a user pressing a button or when a specific event occurs.
 
 ## Resources
 
 To learn more about developing with the CLI, you can visit the following guides:
 
-- [Creating a new app with the CLI](https://api.slack.com/future/create)
-- [Configuring your app](https://api.slack.com/future/manifest)
-- [Developing locally](https://api.slack.com/future/run)
+- [Creating a new app with the CLI](https://api.slack.com/automation/create)
+- [Configuring your app](https://api.slack.com/automation/manifest)
+- [Developing locally](https://api.slack.com/automation/run)
 
 To view all documentation and guides available, visit the
-[Overview page](https://api.slack.com/future/overview).
+[Overview page](https://api.slack.com/automation/overview).
