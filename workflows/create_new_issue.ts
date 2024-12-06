@@ -96,7 +96,7 @@ CreateNewIssueWorkflow.addStep(Schema.slack.functions.SendMessage, {
   channel_id: CreateNewIssueWorkflow.inputs.channel,
   message:
     `Issue #${issue.outputs.GitHubIssueNumber} has been successfully created\n` +
-    `Link to issue: ${issue.outputs.GitHubIssueLink}`,
+    `Link to issue: <${issue.outputs.GitHubIssueLink}>`,
 });
 
 export default CreateNewIssueWorkflow;
