@@ -1,5 +1,5 @@
-import { StubFetch } from "../testing/http.ts";
 import { assertEquals } from "@std/assert";
+import { stub } from "@std/testing/mock";
 
 import { SlackFunctionTester } from "deno-slack-sdk/mod.ts";
 import handler from "./create_issue.ts";
@@ -16,30 +16,35 @@ Deno.test("Create a GitHub issue with given inputs", async () => {
    * Mocked responses of Slack API and external endpoints can be set with
    * mock_fetch.
    */
-  const stubFetch = new StubFetch();
-  stubFetch.stub({
-    matches: (req) => {
+  using _fetchStub = stub(
+    globalThis,
+    "fetch",
+    (url: string | URL | Request, options?: RequestInit) => {
+      const req = url instanceof Request ? url : new Request(url, options);
       assertEquals(req.method, "POST");
-      assertEquals(req.url, "https://slack.com/api/apps.auth.external.get");
+      switch (req.url) {
+        case "https://slack.com/api/apps.auth.external.get":
+          return Promise.resolve(
+            new Response(`{"ok": true, "external_token": "example-token"}`),
+          );
+        case "https://api.github.com/repos/slack-samples/deno-github-functions/issues":
+          return Promise.resolve(
+            new Response(
+              `{"number": 123, "html_url": "https://www.example.com/expected-html-url"}`,
+              {
+                status: 201,
+              },
+            ),
+          );
+        default:
+          throw Error(
+            `No stub found for ${req.method} ${req.url}\nHeaders: ${
+              JSON.stringify(Object.fromEntries(req.headers.entries()))
+            }`,
+          );
+      }
     },
-    response: new Response(`{"ok": true, "external_token": "example-token"}`),
-  });
-
-  stubFetch.stub({
-    matches: (req) => {
-      assertEquals(req.method, "POST");
-      assertEquals(
-        req.url,
-        "https://api.github.com/repos/slack-samples/deno-github-functions/issues",
-      );
-    },
-    response: new Response(
-      `{"number": 123, "html_url": "https://www.example.com/expected-html-url"}`,
-      {
-        status: 201,
-      },
-    ),
-  });
+  );
 
   const inputs = {
     githubAccessTokenId: {},
@@ -49,14 +54,10 @@ Deno.test("Create a GitHub issue with given inputs", async () => {
     assignees: "batman",
   };
 
-  try {
-    const { outputs } = await handler(createContext({ inputs, env }));
-    assertEquals(outputs?.GitHubIssueNumber, 123);
-    assertEquals(
-      outputs?.GitHubIssueLink,
-      "https://www.example.com/expected-html-url",
-    );
-  } finally {
-    stubFetch.restore();
-  }
+  const { outputs } = await handler(createContext({ inputs, env }));
+  assertEquals(outputs?.GitHubIssueNumber, 123);
+  assertEquals(
+    outputs?.GitHubIssueLink,
+    "https://www.example.com/expected-html-url",
+  );
 });
