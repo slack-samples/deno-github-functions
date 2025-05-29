@@ -108,7 +108,7 @@ export default SlackFunction(
         body,
       }).then((res: Response) => {
         if (res.status === 201) return res.json();
-        else throw new Error(`${res.status}: ${res.statusText}`);
+        throw new Error(`${res.status}: ${res.statusText}`);
       });
 
       return {
@@ -120,8 +120,9 @@ export default SlackFunction(
     } catch (err) {
       console.error(err);
       return {
-        error:
-          `An error was encountered during issue creation: \`${err.message}\``,
+        error: `An error was encountered during issue creation: \`${
+          err instanceof Error ? err.message : String(err)
+        }\``,
       };
     }
   },

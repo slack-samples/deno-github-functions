@@ -1,5 +1,5 @@
 import { DefineOAuth2Provider, Schema } from "deno-slack-sdk/mod.ts";
-import "std/dotenv/load.ts";
+import "@std/dotenv/load";
 
 /**
  * External authentication uses the OAuth 2.0 protocol to connect with
