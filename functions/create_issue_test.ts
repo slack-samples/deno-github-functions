@@ -1,7 +1,7 @@
 import { assertEquals } from "@std/assert";
 import { stub } from "@std/testing/mock";
 
-import { SlackFunctionTester } from "deno-slack-sdk/mod.ts";
+import { SlackFunctionTester } from "@slack/sdk";
 import handler from "./create_issue.ts";
 
 /**
