@@ -1,4 +1,4 @@
-import { DefineOAuth2Provider, Schema } from "deno-slack-sdk/mod.ts";
+import { DefineOAuth2Provider, Schema } from "@slack/sdk";
 import "@std/dotenv/load";
 
 /**

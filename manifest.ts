@@ -1,4 +1,4 @@
-import { Manifest } from "deno-slack-sdk/mod.ts";
+import { Manifest } from "@slack/sdk";
 import GitHubProvider from "./external_auth/github_provider.ts";
 import CreateNewIssueWorkflow from "./workflows/create_new_issue.ts";
 
